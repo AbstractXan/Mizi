@@ -33,7 +33,6 @@ int main(){
 
                 // Category
                 if(hashcount==1){
-                    cout << line.substr(i+1,line.size()-i);
                     currentCategory = createCategory(line.substr(i+1,line.size()-i),categoryCount++);
                 }
 
@@ -73,7 +72,7 @@ int main(){
 
                 currentPartDesc+=line;
                 currentPartDesc+="\n";
-                if (currentPage)
+                if (currentPage->title != "")
                     currentPage->partDesc[(currentPage->partsCount)-1]=currentPartDesc;
             }
         }
@@ -81,12 +80,10 @@ int main(){
     }
     else cout << "Unable to open file"<<endl; 
 
-    // Refer 'reader.h'
-    printContent(Categories,categoryCount);
+    //Debug Refer 'reader.h'
+    //printContent(Categories,categoryCount);
 
-    // string test = "Welcome home";
-    // string lowertest = toLowerCase(test);
-    // cout << lowertest;
-
+    cout << "Categories found: " << categoryCount << endl;
+    createSite(Categories,categoryCount);
     return 0;
 }
