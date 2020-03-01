@@ -1,6 +1,25 @@
 #include<string>
 #include<iostream>
 using namespace std;
+
+char getLower(char c){
+    if (c >= 'A' && c <='Z')
+        return c-('Z'-'z');
+    return c;
+}
+
+string toLowerCase(string text){
+    for(int i=0;i<text.size();i++){
+        if (text[i]=='\0')
+            break;
+        else if(text[i]==' ')
+            text[i]='_';
+        else 
+            text[i] = getLower(text[i]);
+    }
+    return text;        
+}
+
 struct Page{
     string title;
     int partsCount;
@@ -20,6 +39,9 @@ void addPart(Page * page, string name){
     page->partsCount++;
 }
 
+void buildPage(Page * page){
+
+}
 struct Category{
     string name;
     int pageCount;
@@ -28,14 +50,12 @@ struct Category{
 
 
 struct Category * Categories[16];
-int categoryCount=0;
 
-Category * createCategory(string name){
+Category * createCategory(string name,int count){
     Category * newCategory = new Category;
     newCategory->name = name;
     newCategory->pageCount = 0;
-    Categories[categoryCount]=newCategory;
-    categoryCount++;
+    Categories[count]=newCategory;
     return newCategory;
 }
 void addPage(Category * category, Page * page){
@@ -44,13 +64,15 @@ void addPage(Category * category, Page * page){
 }
 
 
-void printContent(Category cats[16]){
-    for(int i=0; i<categoryCount;i++){
-        Category tempCat = cats[i];
+void printContent(Category * cats[],int count){
+    for(int i=0; i<count;i++){
+        Category tempCat = *cats[i];
         cout << tempCat.name << endl;
+
         for(int pageno=0;pageno<tempCat.pageCount;pageno++){
             Page tempPage = *tempCat.pages[pageno];
             cout << "\t" << tempPage.title << endl;
+            
             for(int partno=0;partno<tempPage.partsCount;partno++){
                 cout << "\t\t" << tempPage.partName[partno]<<endl;
                 cout << "\t\t" << tempPage.partDesc[partno]<<endl;

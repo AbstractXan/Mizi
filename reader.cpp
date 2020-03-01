@@ -3,10 +3,11 @@
 
 using namespace std;
 
-int main(){
-    
+
+int main(){ 
     string line;
     int lineNo=0;
+    int categoryCount=0;
 
     Category * currentCategory; 
     Page * currentPage;   
@@ -14,6 +15,7 @@ int main(){
     string currentPartDesc = "";
     
     ifstream mdFile ("website.md");
+    
     if (mdFile.is_open())
     {
         while ( getline (mdFile,line) )
@@ -31,7 +33,8 @@ int main(){
 
                 // Category
                 if(hashcount==1){
-                    currentCategory = createCategory(line.substr(i+1,line.size()-i));
+                    cout << line.substr(i+1,line.size()-i);
+                    currentCategory = createCategory(line.substr(i+1,line.size()-i),categoryCount++);
                 }
 
                 // Page
@@ -57,6 +60,7 @@ int main(){
                     //Current Part Name
                     currentPartName = line.substr(i+1,line.size()-i);
                     addPart(currentPage,currentPartName);
+                    currentPartDesc = "";
                 }
             } 
             else //No headings
@@ -68,13 +72,21 @@ int main(){
                 }
 
                 currentPartDesc+=line;
-                currentPage->partDesc[currentPage->partsCount-1]=currentPartDesc;
+                currentPartDesc+="\n";
+                if (currentPage)
+                    currentPage->partDesc[(currentPage->partsCount)-1]=currentPartDesc;
             }
         }
         mdFile.close();
     }
     else cout << "Unable to open file"<<endl; 
 
-    printContent(*Categories);
+    // Refer 'reader.h'
+    printContent(Categories,categoryCount);
+
+    // string test = "Welcome home";
+    // string lowertest = toLowerCase(test);
+    // cout << lowertest;
+
     return 0;
 }
