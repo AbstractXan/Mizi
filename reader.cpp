@@ -1,43 +1,80 @@
-#include<iostream>
 #include<fstream>
-#include<string>
+#include"reader.h"
+
 using namespace std;
 
 int main(){
-    //Open file
+    
     string line;
+    int lineNo=0;
 
-    string categories[] = {};
+    Category * currentCategory; 
+    Page * currentPage;   
+    string currentPartName = "";
+    string currentPartDesc = "";
+    
     ifstream mdFile ("website.md");
     if (mdFile.is_open())
     {
         while ( getline (mdFile,line) )
         {
+            lineNo++;
             int hashcount=0;
             int i=0;
-            string currentCategory;
-            
-            while(line[i]=='#'){
-                hashcount++;
-                i++;
-            }
 
-            // Category
-            if(hashcount==1){
-                currentCategory = line.substr(i+1,line.size()-i);
-                cout << currentCategory;
-            }
-            if(hashcount==2){   
-                if (currentCategory.empty()){
-                    cout << "Error! No Category assigned!\n";
+            // Headings
+            if (line[0]=='#'){
+                while(line[i]=='#'){
+                    hashcount++;
+                    i++;
+                }
+
+                // Category
+                if(hashcount==1){
+                    currentCategory = createCategory(line.substr(i+1,line.size()-i));
+                }
+
+                // Page
+                else if(hashcount==2){   
+                    if (currentCategory->name.empty()){
+                        printError(lineNo,"No Category assigned!");
+                        return 0;
+                    }
+                    currentPage = createPage(line.substr(i+1,line.size()-i));
+                    addPage(currentCategory,currentPage);
+                }
+
+                // Part
+                else if(hashcount==3){
+                    if (currentCategory->name.empty()){
+                        printError(lineNo,"No Category assigned!");
+                        return 0;
+                    }
+                    if (currentPage->title.empty()){
+                        printError(lineNo,"No Page assigned!");
+                        return 0;
+                    }
+                    //Current Part Name
+                    currentPartName = line.substr(i+1,line.size()-i);
+                    addPart(currentPage,currentPartName);
+                }
+            } 
+            else //No headings
+            {
+                // Error
+                if(currentPartName==""||currentPage->title.empty()){
+                    printError(lineNo,"No Part assigned!");
                     return 0;
                 }
+
+                currentPartDesc+=line;
+                currentPage->partDesc[currentPage->partsCount-1]=currentPartDesc;
             }
         }
         mdFile.close();
     }
+    else cout << "Unable to open file"<<endl; 
 
-    else cout << "Unable to open file\n"; 
-
+    printContent(*Categories);
     return 0;
 }
