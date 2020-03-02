@@ -8,13 +8,16 @@ Currently supported format:
 # Category
 ## Page
 ### Part
+- First
+- Second
+- Third
+<p>Could write in HTML too!</p>
 ```
 
 ## Todo
 
 ```
 - urls
-- unordered list
 - images
 - seperate pages
 ```

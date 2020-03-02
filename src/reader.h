@@ -17,7 +17,7 @@ char getLower(char c){
 }
 
 string toLowerCase(string text){
-    for(int i=0;i<text.size();i++){
+    for(unsigned int i=0;i<text.size();i++){
         if (text[i]=='\0')
             break;
         else if(text[i]==' ')
@@ -52,7 +52,6 @@ struct Category{
     int pageCount;
     Page * pages[32];
 };
-
 
 struct Category * Categories[16];
 
@@ -89,6 +88,119 @@ void addPage(Category * category, Page * page){
 //Prints errorline
 void printError(int linenumber, string text){
     cout<<"Error at line " << linenumber << ". " << text << endl;
+}
+
+Category ** createCategories(int * categoryCount){
+
+    string line;
+    int lineNo=0;
+
+    Category * currentCategory; 
+    Page * currentPage;   
+    bool uList = false;
+    string currentPartName = "";
+    string currentPartDesc = "";
+    
+    ifstream mdFile ("website.md");
+    
+    if (mdFile.is_open())
+    {
+        while ( getline (mdFile,line) )
+        {
+            lineNo++;
+            int hashcount=0;
+            int i=0;
+
+            //Removing unwanted spaces
+            while(line[i]==' '){
+                i++;
+            }
+
+            // Headings
+            if (line[i]=='#'){
+                while(line[i]=='#'){
+                    hashcount++;
+                    i++;
+                }
+
+                // Category
+                if(hashcount==1){
+                    currentCategory = createCategory(line.substr(i+1,line.size()-i),*categoryCount);
+                    (*categoryCount)++;
+                    uList = false;
+                }
+
+                // Page
+                else if(hashcount==2){   
+                    if (currentCategory->name.empty()){
+                        printError(lineNo,"No Category assigned!");
+                        return 0;
+                    }
+                    currentPage = createPage(line.substr(i+1,line.size()-i));
+                    addPage(currentCategory,currentPage);
+                    uList = false;
+                }
+
+                // Part
+                else if(hashcount==3){
+                    if (currentCategory->name.empty()){
+                        printError(lineNo,"No Category assigned!");
+                        return 0;
+                    }
+                    if (currentPage->title.empty()){
+                        printError(lineNo,"No Page assigned!");
+                        return 0;
+                    }
+                    //Current Part Name
+                    currentPartName = line.substr(i+1,line.size()-i);
+                    addPart(currentPage,currentPartName);
+                    currentPartDesc = "<p>";
+                    uList = false;
+                }
+            } 
+            else //No headings
+            {
+                // Error
+                if(currentPartName==""||currentPage->title.empty()){
+                    printError(lineNo,"No Part assigned!");
+                    return 0;
+                }
+
+                // Ul
+                if(line[i]=='-'){
+                    i++;
+                    // If not in a ul 
+                    if(uList==false){
+                        currentPartDesc += "<ul>";
+                        uList=true;
+                    }
+
+                    currentPartDesc += "<li>";
+                    currentPartDesc += line.substr(i+1,line.size()-i);
+                    currentPartDesc += "</li>";
+
+                } else { // If list doesn't continue
+                    if(uList==true){
+                        uList=false;
+                        currentPartDesc += "</ul>";
+                    }
+
+                    currentPartDesc+=line;
+                    currentPartDesc+="";
+                }
+
+                // For <ul> continuing to next part of the page, Every 'part name' has an extra </ul> to keep a check.
+                // Refer to build page function
+
+                // Update if page exists, add to current part i.e. (partsCount - 1)
+                if (currentPage->title != "")
+                    currentPage->partDesc[(currentPage->partsCount)-1]=currentPartDesc;
+            }
+        }
+        mdFile.close();
+    } else {
+        cout << "Unable to open file"<<endl; }
+    return Categories;
 }
 
 void buildHome(Category * categories[], int categories_length){
@@ -141,7 +253,7 @@ void buildPage(Page * page){
         string part_name = page->partName[i];
         string part_desc = page->partDesc[i];
         string part_index = toLowerCase(part_name);
-        htmlPage << "<h2 id='" << part_index << "'>" << part_name << "</h2>";
+        htmlPage << "</ul><h2 id='" << part_index << "'>" << part_name << "</h2>"; // Extra </ul> to keep a check on overflowing <ul>
         htmlPage << part_desc;
     }
 
@@ -151,10 +263,19 @@ void buildPage(Page * page){
     htmlPage.close();
 }
 
-void createSite(Category * cats[],int count){
+void createSite(){
 
-    buildHome(cats,count);
-    for(int i=0; i<count;i++){
+    Category ** cats;
+    int categoryCount = 0;
+    cats = createCategories(&categoryCount);
+    cout << "Categories found: " << categoryCount << endl;
+
+        
+    //Debug Refer
+    //printContent(cats,categoryCount);
+
+    buildHome(cats,categoryCount);
+    for(int i=0; i<categoryCount;i++){
         Category tempCat = *cats[i];
 
         for(int pageno=0;pageno<tempCat.pageCount;pageno++){
