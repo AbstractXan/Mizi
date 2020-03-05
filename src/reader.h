@@ -4,11 +4,11 @@
 using namespace std;
 
 string html_head(string text){
-    return "<!DOCTYPE html><html lang='en'><head><meta charset='utf-8'><meta name='description' content='AbstractXan'><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content='@abstractxan'><meta name='twitter:title' content='AbstractXan'><meta name='twitter:description' content='AbstractXan creates art , games and open source tools.'><meta name='twitter:creator' content='@abstractxan'><meta name='twitter:image' content='../media/interface/logo.png'><meta property='og:title' content='AbstractXan'><meta property='og:site_name' content='AbstractXan'><title>AbstractXan — "+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
+    return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' href='../media/interface/favicon.ico' type='image/x-icon'><link rel='icon' href='../media/interface/favicon.ico' type='image/x-icon'><meta charset='utf-8'><meta name='description' content=''><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content=''><meta name='twitter:title' content=''><meta name='twitter:description' content='Website generated using mdToWeb'><meta name='twitter:creator' content='@abstractxan'><meta name='twitter:image' content='../media/interface/logo.png'><meta property='og:title' content=''><meta property='og:site_name' content=''><title>"+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
 }
-string html_header = "<header><a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='AbstractXan' ></a></header>";
+string html_header = "<header><a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a></header>";
 
-string html_footer = "<footer>Abstractxan Ⓒ 2020<p>Never miss an update</p><form action='https://tinyletter.com/abstractxan' method='post' target='popupwindow' onsubmit='window.open(\'https://tinyletter.com/abstractxan\', \'popupwindow\', \'scrollbars=yes,width=800,height=600\');return true'><input type='email' value='' name='EMAIL' class='email' placeholder='email@address.com' required=''><input type='submit' value='Subscribe' name='subscribe' class='button'></form></footer></body></html>";
+string html_footer = "<footer><p>Website generated using <u><a href='https://github.com/abstractxan/mdToWebsite'>abstractxan/mdToWebsite</a><u></p></footer></body></html>";
 
 char getLower(char c){
     if (c >= 'A' && c <='Z')
@@ -90,6 +90,82 @@ void printError(int linenumber, string text){
     cout<<"Error at line " << linenumber << ". " << text << endl;
 }
 
+
+//  [urlText](url) ->  <a href='url'>urlText</a>
+string parseLinks(string text){
+    int index = 0;
+    string newText = "";
+    string urlText = "";
+    string url = "";
+
+        for(;index<text.size();){
+            // Enter into linking
+            if(text[index]=='['){
+                index++;
+                //Loop through urltext
+                
+                while(index<text.size() && text[index]!=']'){
+                    
+                    //Broken [text [text](link) case
+                    if(text[index]=='['){
+                        newText += '[' + urlText;
+                        urlText = "";
+                        index++;
+                    }
+
+                    urlText += text[index];
+                    index++;
+                }
+
+                // EndofUrlText
+                if(text[index]==']'&&index<text.size())
+                {
+                    index++;
+                    if(text[index]=='('&&index<text.size()){
+                        index++; 
+                        //Continue
+                        while(index<text.size() && text[index]!=')'){
+                            
+                            // Error [link](abc.com [link](abc.com)
+                            if(text[index]=='['){
+                                newText += '[' + urlText + "](" + url;
+                                urlText = "";
+                                break;
+                            }
+                            url += text[index];
+                            index++;
+                        }
+
+                        // Complete parsing
+                        if(text[index]==')'&&index<text.size()){
+                            index++;
+                            newText += "<a href='" + url +"'>" + urlText +"</a>";
+                            url = "";
+                            urlText = "";
+                            continue;
+                        }
+
+                        if(index==text.size()){
+                            newText += '[' + urlText + "]("+ url;
+                            continue;
+                        }
+                    }
+                    else{
+                        newText += '[' + urlText + ']';
+                        continue;
+                    }
+                } else {
+                    newText += '['+ urlText;
+                    continue;
+                }
+            } else {
+                newText += text[index];
+                index++;
+            }
+        }
+
+    return newText;
+}
 Category ** createCategories(int * categoryCount){
 
     string line;
@@ -111,11 +187,12 @@ Category ** createCategories(int * categoryCount){
             int hashcount=0;
             int i=0;
 
+            line = parseLinks(line);
+
             //Removing unwanted spaces
             while(line[i]==' '){
                 i++;
             }
-
             // Headings
             if (line[i]=='#'){
                 while(line[i]=='#'){
@@ -158,7 +235,7 @@ Category ** createCategories(int * categoryCount){
                     uList = false;
                 }
             } 
-            else //No headings
+            else //No headings: Plaintext
             {
                 // Error
                 if(currentPartName==""||currentPage->title.empty()){
@@ -185,8 +262,11 @@ Category ** createCategories(int * categoryCount){
                         currentPartDesc += "</ul>";
                     }
 
-                    currentPartDesc+=line;
-                    currentPartDesc+="";
+                    if(line.size()!=0){
+                        currentPartDesc+="<p>"+line+"</p>";
+                    } else {
+                        currentPartDesc += line;
+                    }
                 }
 
                 // For <ul> continuing to next part of the page, Every 'part name' has an extra </ul> to keep a check.
@@ -206,7 +286,7 @@ Category ** createCategories(int * categoryCount){
 void buildHome(Category * categories[], int categories_length){
     ofstream htmlHome;
     htmlHome.open("../site/home.html");
-    htmlHome << html_head("home");
+    htmlHome << html_head("Home");
     htmlHome << html_header;
     htmlHome << "<main class='home'>";
 

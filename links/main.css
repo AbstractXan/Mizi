@@ -8,7 +8,7 @@
 @font-face { font-family: 'input_mono_regular'; src: url('../media/fonts/input_mono_regular.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'input_mono_medium'; src: url('../media/fonts/input_mono_medium.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 
-html { background:black; }
+html { background:white; }
 body { background:#fff; color:#000; font-family: "alte_haas_grotesk_regular", "Helvetica Neue", Helvetica, Arial; overflow-x: hidden; margin-top:5px; padding:45px 90px; }
 body hr { border:0; clear:both; }
 body header a#logo { margin-top: -15px;display: block;width: 75px; margin-bottom:15px;}
@@ -48,9 +48,7 @@ body main ul.gallery li h4 { font-family: "alte_haas_grotesk_bold", "Helvetica N
 
 body footer { border-top: 1.5px solid black;padding-top: 30px;margin-bottom: 120px; max-width: 600px }
 body footer p { font-weight: bold }
-body footer form { margin-top: 5px; border: 1.5px solid black; display: inline-block; }
-body footer form *:first-child { padding-left:15px; }
-body footer form *:last-child { background:#000;font-weight: bold;color:white;padding: 10px; cursor: pointer; }
+body footer p a { text-decoration: underline; }
 
 div.sketchbook {height: 100%;}
 div.sketchbook img{ max-width: calc(100% - 20px); border-radius: 3px;margin: 10px; display: block; float: left; border-style: solid; border-radius: 3px; border-width: 3px;}

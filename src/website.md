@@ -18,3 +18,21 @@ Consectetur adipiscing elit
 - Third
 ### UL Overflow Check
 - What? 
+
+## Links
+### Simple
+[link](https://www.abstractxan.xyz)
+### Inline
+Text [link](https://abstractxan.xyz) text
+### Multiple
+Text [link](https://abstractxan.xyz) text [link](https://abstractxan.xyz) text
+### Errors
+[broken text (https://abstractxan.xyz)
+
+[broken text [text](https://abstractxan.xyz)
+
+[broken link](https://abstractxan.xyz [normal link](https://www.abstractxan.xyz)
+
+[broken link]
+
+[nested [links] (https://abstractxan.xyz)](https://google.com)
