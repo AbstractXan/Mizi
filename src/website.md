@@ -1,4 +1,4 @@
-# Testing
+# Mizi
 ## HTML
 ### html p tag
 <p>This is a paragraph</p>
