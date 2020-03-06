@@ -90,17 +90,32 @@ void printError(int linenumber, string text){
     cout<<"Error at line " << linenumber << ". " << text << endl;
 }
 
-
 //  [urlText](url) ->  <a href='url'>urlText</a>
+// ![altText](image) -> <img src='' alt=''> 
 string parseLinks(string text){
     unsigned int index = 0;
     string newText = "";
     string urlText = "";
     string url = "";
+    bool isImage = false;
 
         for(;index<text.size();){
             // Enter into linking
+            if(text[index=='!'] && text[index+1]=='['){
+                isImage = true;
+                index++;
+                continue;
+            }
+
             if(text[index]=='['){
+
+                // Crude implementation for images
+                if(index>=1 && text[index-1]=='!'){
+                    isImage = true;
+                } else {
+                    isImage = false;
+                }
+
                 index++;
                 //Loop through urltext
                 
@@ -138,10 +153,18 @@ string parseLinks(string text){
 
                         // Complete parsing
                         if(text[index]==')'&&index<text.size()){
-                            index++;
-                            newText += "<a href='" + url +"'>" + urlText +"</a>";
+
+                            if(isImage){
+                                index++;
+                                cout << "<img src='" + url + "' alt='" + urlText + "'>";
+                                newText += "<img src='" + url + "' alt='" + urlText + "'>";
+                            } else{
+                                index++;
+                                newText += "<a href='" + url +"'>" + urlText +"</a>";
+                            }
                             url = "";
                             urlText = "";
+                            isImage = false;
                             continue;
                         }
 

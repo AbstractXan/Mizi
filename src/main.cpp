@@ -1,5 +1,5 @@
 #include<fstream>
-#include"reader.h"
+#include"reader.cpp"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ void createSite(){
 
         
     //Debug categories
-    //printContent(cats,categoryCount);
+    printContent(cats,categoryCount);
 
     buildHome(cats,categoryCount);
     for(int i=0; i<categoryCount;i++){

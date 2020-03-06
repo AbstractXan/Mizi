@@ -36,3 +36,16 @@ Text [link](https://abstractxan.xyz) text [link](https://abstractxan.xyz) text
 [broken link]
 
 [nested [links] (https://abstractxan.xyz)](https://google.com)
+
+## Images
+### Optional alt text
+![](../media/interface/favicon.ico)
+### Single
+![image](../media/interface/favicon.ico)
+### Inline
+Text! ![image](../media/interface/favicon.ico) !Text
+### Multiple
+![image](../media/interface/favicon.ico) ![image](../media/interface/favicon.ico)
+### Errors
+![brokenImageText (../media/interface/favicon.ico)
+![brokenImageLink]

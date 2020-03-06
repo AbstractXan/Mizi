@@ -2,9 +2,19 @@
 
 ![](./media/interface/logo.png)
 
-Create websites in an instant!
+A simple static website generator written in C++ that takes markdown format as input. 
 
-Currently supported format:
+Inspired from [hundredrabbits/100r.co](https://github.com/hundredrabbits/100r.co)
+
+Created for my website [abstractxan.xyz](https://abstractxan.xyz)
+
+## Download and run
+- Clone / Download this repository
+- Update `src/website.md`
+- Run `main.exe` to create site
+- Open `index.html`
+
+## Currently supported format:
 
 ``` md
 # Category
@@ -15,15 +25,15 @@ Currently supported format:
 - Third
 <p>Could write in HTML too!</p>
 Inline [links!](https://abstractxan.xyz)
-
+Inline images ![images](./media/interface/favicon.ico)
 ```
 
-## Todo
+## Todo:
 
 ``` md
-- images
 - seperate pages
-- config file
-- fix url parsing code by split string
+- config file for head, header and footer
+- fix url and image parsing code by split string
+- adding classes to images
 - fix favicon icon
 ```
