@@ -156,11 +156,10 @@ string parseLinks(string text){
 
                             if(isImage){
                                 index++;
-                                cout << "<img src='" + url + "' alt='" + urlText + "'>";
                                 newText += "<img src='" + url + "' alt='" + urlText + "'>";
                             } else{
                                 index++;
-                                newText += "<a href='" + url +"'>" + urlText +"</a>";
+                                newText += " <a href='" + url +"'>" + urlText +"</a>";
                             }
                             url = "";
                             urlText = "";
