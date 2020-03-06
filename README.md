@@ -1,4 +1,6 @@
-# MDtoWebsite
+# Mizi
+
+![](./media/interface/logo.png)
 
 Create websites in an instant!
 
@@ -20,8 +22,8 @@ Inline [links!](https://abstractxan.xyz)
 
 ``` md
 - images
-- config file
 - seperate pages
+- config file
 - fix url parsing code by split string
 - fix favicon icon
 ```

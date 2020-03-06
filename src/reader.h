@@ -4,11 +4,11 @@
 using namespace std;
 
 string html_head(string text){
-    return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' href='../media/interface/favicon.ico' type='image/x-icon'><link rel='icon' href='../media/interface/favicon.ico' type='image/x-icon'><meta charset='utf-8'><meta name='description' content=''><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content=''><meta name='twitter:title' content=''><meta name='twitter:description' content='Website generated using mdToWeb'><meta name='twitter:creator' content='@abstractxan'><meta name='twitter:image' content='../media/interface/logo.png'><meta property='og:title' content=''><meta property='og:site_name' content=''><title>"+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
+    return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' href='../media/interface/favicon.ico' type='image/x-icon'><link rel='icon' href='../media/interface/favicon.ico' type='image/x-icon'><meta charset='utf-8'><meta name='description' content=''><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content=''><meta name='twitter:title' content=''><meta name='twitter:description' content='Website generated using abstractxan/Mizi'><meta name='twitter:creator' content='@abstractxan'><meta name='twitter:image' content='../media/interface/logo.png'><meta property='og:title' content=''><meta property='og:site_name' content=''><title> Mizi  "+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
 }
 string html_header = "<header><a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a></header>";
 
-string html_footer = "<footer><p>Website generated using <u><a href='https://github.com/abstractxan/mdToWebsite'>abstractxan/mdToWebsite</a><u></p></footer></body></html>";
+string html_footer = "<footer><p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p></footer></body></html>";
 
 char getLower(char c){
     if (c >= 'A' && c <='Z')
@@ -68,22 +68,22 @@ void addPage(Category * category, Page * page){
 }
 
 // Debug
-// void printContent(Category * cats[],int count){
-//     for(int i=0; i<count;i++){
-//         Category tempCat = *cats[i];
-//         cout << tempCat.name << endl;
+void printContent(Category * cats[],int count){
+    for(int i=0; i<count;i++){
+        Category tempCat = *cats[i];
+        cout << tempCat.name << endl;
 
-//         for(int pageno=0;pageno<tempCat.pageCount;pageno++){
-//             Page tempPage = *tempCat.pages[pageno];
-//             cout << "\t" << tempPage.title << endl;
+        for(int pageno=0;pageno<tempCat.pageCount;pageno++){
+            Page tempPage = *tempCat.pages[pageno];
+            cout << "\t |" << tempPage.title << endl;
             
-//             for(int partno=0;partno<tempPage.partsCount;partno++){
-//                 cout << "\t\t" << tempPage.partName[partno]<<endl;
-//                 cout << "\t\t" << tempPage.partDesc[partno]<<endl;
-//             }
-//         }
-//     }
-// }
+            for(int partno=0;partno<tempPage.partsCount;partno++){
+                cout << "\t\t |" << tempPage.partName[partno]<<endl;
+                cout << "\t\t |" << tempPage.partDesc[partno]<<endl;
+            }
+        }
+    }
+}
 
 //Prints errorline
 void printError(int linenumber, string text){
@@ -93,7 +93,7 @@ void printError(int linenumber, string text){
 
 //  [urlText](url) ->  <a href='url'>urlText</a>
 string parseLinks(string text){
-    int index = 0;
+    unsigned int index = 0;
     string newText = "";
     string urlText = "";
     string url = "";
@@ -172,7 +172,7 @@ Category ** createCategories(int * categoryCount){
     int lineNo=0;
 
     Category * currentCategory; 
-    Page * currentPage;   
+    Page * currentPage = NULL;   
     bool uList = false;
     string currentPartName = "";
     string currentPartDesc = "";
@@ -341,26 +341,4 @@ void buildPage(Page * page){
     htmlPage << "</main>";
     htmlPage << html_footer;
     htmlPage.close();
-}
-
-void createSite(){
-
-    Category ** cats;
-    int categoryCount = 0;
-    cats = createCategories(&categoryCount);
-    cout << "Categories found: " << categoryCount << endl;
-
-        
-    //Debug Refer
-    //printContent(cats,categoryCount);
-
-    buildHome(cats,categoryCount);
-    for(int i=0; i<categoryCount;i++){
-        Category tempCat = *cats[i];
-
-        for(int pageno=0;pageno<tempCat.pageCount;pageno++){
-            Page * tempPage = tempCat.pages[pageno];
-            buildPage(tempPage);
-        }
-    }
 }
