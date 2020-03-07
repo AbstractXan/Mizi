@@ -39,7 +39,6 @@ Text
 ## Todo:
 
 ``` md
-- Different way to handle seperate pages
 - config file for head, header and footer
 - fix url and image parsing code by split string
 - adding classes to images
