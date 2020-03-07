@@ -1,6 +1,21 @@
 # Mizi
+## About
+###  
+This site was generated using this file: [website.md](https://raw.githubusercontent.com/AbstractXan/Mizi/master/src/website.md)
+
+[Read more](https://github.com/abstractxan/mizi) about Mizi
+
+$$$ 
+## separate
+###  
+This is a separate page
+## separate2
+###  
+This is separate page2
+
+# Testing
 ## HTML
-### html p tag
+### Html &lt; p &gt; tag
 <p>This is a paragraph</p>
 
 ## Index
@@ -17,7 +32,7 @@ Consectetur adipiscing elit
 - Second
 - Third
 ### UL Overflow Check
-- What? 
+- Above text should be heading 
 
 ## Links
 ### Simple
@@ -49,3 +64,8 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ### Errors
 ![brokenImageText (../media/interface/favicon.ico)
 ![brokenImageLink]
+
+## SeparatePages
+###  
+- [Separate page](separate.html)
+- [Separate page2](separate2.html)
