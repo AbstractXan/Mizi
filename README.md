@@ -16,7 +16,7 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com) [![Net
 - Run `main.exe` to create site
 - Open `index.html`
 
-![](./media/mizi.jpg)
+![](./media/mizi.png)
 ## Currently supported format:
 
 ``` md
