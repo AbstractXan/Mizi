@@ -8,7 +8,8 @@ Inspired from [hundredrabbits/100r.co](https://github.com/hundredrabbits/100r.co
 
 Created for my website [abstractxan.xyz](https://abstractxan.xyz)
 
-Demo repo here : [mizi.netlify.com](https://mizi.netlify.com) [![Netlify Status](https://api.netlify.com/api/v1/badges/62460383-615c-4be8-911e-c1513ea806dc/deploy-status)](https://app.netlify.com/sites/mizi/deploys)
+Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com) [![Netlify Status](https://api.netlify.com/api/v1/badges/62460383-615c-4be8-911e-c1513ea806dc/deploy-status)](https://app.netlify.com/sites/mizi/deploys)
+
 ## Download and run
 - Clone / Download this repository
 - Update `src/website.md`

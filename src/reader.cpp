@@ -70,7 +70,7 @@ void addPage(Category * category, Page * page){
 
 // Debug
 void printContent(Category * cats[],int count){
-    for(int i=1; i<count;i++){
+    for(int i=0; i<=count;i++){
         Category tempCat = *cats[i];
         cout << tempCat.name << endl;
 
@@ -321,7 +321,7 @@ void buildHome(Category * categories[], int categories_length){
     htmlHome << html_header;
     htmlHome << "<main class='home'>";
 
-    for(int i=1;i<categories_length;i++){
+    for(int i=1;i<=categories_length;i++){
         Category * category = categories[i];
         htmlHome << "<h2>"<< category->name << "</h2>";
         htmlHome << "<ul>";

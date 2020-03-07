@@ -14,7 +14,7 @@ void createSite(){
     printContent(cats,categoryCount);
 
     buildHome(cats,categoryCount);
-    for(int i=0; i<categoryCount;i++){
+    for(int i=0; i<=categoryCount;i++){ //Build all pages including seperate pages
         Category tempCat = *cats[i];
 
         for(int pageno=0;pageno<tempCat.pageCount;pageno++){
