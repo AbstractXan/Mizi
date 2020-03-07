@@ -54,6 +54,7 @@ struct Category{
 };
 
 struct Category * Categories[16];
+struct Page * SeparatePages[20];
 
 Category * createCategory(string name,int count){
     Category * newCategory = new Category;
@@ -69,7 +70,7 @@ void addPage(Category * category, Page * page){
 
 // Debug
 void printContent(Category * cats[],int count){
-    for(int i=0; i<count;i++){
+    for(int i=1; i<count;i++){
         Category tempCat = *cats[i];
         cout << tempCat.name << endl;
 
@@ -188,6 +189,7 @@ string parseLinks(string text){
 
     return newText;
 }
+
 Category ** createCategories(int * categoryCount){
 
     string line;
@@ -198,6 +200,9 @@ Category ** createCategories(int * categoryCount){
     bool uList = false;
     string currentPartName = "";
     string currentPartDesc = "";
+
+    //Category for separate pages
+    Category * seperateCategory = createCategory("SeperatePages",0);
     
     ifstream mdFile ("website.md");
     
@@ -224,8 +229,8 @@ Category ** createCategories(int * categoryCount){
 
                 // Category
                 if(hashcount==1){
+                    (*categoryCount)++; // Categories stored from 1 onwards , categories[0] for separate pages 
                     currentCategory = createCategory(line.substr(i+1,line.size()-i),*categoryCount);
-                    (*categoryCount)++;
                     uList = false;
                 }
 
@@ -256,6 +261,10 @@ Category ** createCategories(int * categoryCount){
                     currentPartDesc = "<p>";
                     uList = false;
                 }
+                else if (hashcount==4){ //Seperate page
+                    currentCategory = seperateCategory;
+                }
+
             } 
             else //No headings: Plaintext
             {
@@ -312,7 +321,7 @@ void buildHome(Category * categories[], int categories_length){
     htmlHome << html_header;
     htmlHome << "<main class='home'>";
 
-    for(int i=0;i<categories_length;i++){
+    for(int i=1;i<categories_length;i++){
         Category * category = categories[i];
         htmlHome << "<h2>"<< category->name << "</h2>";
         htmlHome << "<ul>";
