@@ -215,11 +215,19 @@ Category ** createCategories(int * categoryCount){
             int i=0;
 
             line = parseLinks(line);
-
+            
             //Removing unwanted spaces
             while(line[i]==' '){
                 i++;
             }
+
+            if(line[i] == '$' && line[i+1] == '$' && line[i+2] == '$'){
+                //Seperate page
+                currentCategory = seperateCategory;
+                uList = false;
+                continue;
+            }
+            
             // Headings
             if (line[i]=='#'){
                 while(line[i]=='#'){
@@ -261,13 +269,9 @@ Category ** createCategories(int * categoryCount){
                     currentPartDesc = "<p>";
                     uList = false;
                 }
-                else if (hashcount==4){ //Seperate page
-                    currentCategory = seperateCategory;
-                }
 
             } 
-            else //No headings: Plaintext
-            {
+            else{    //No headings: Plaintext
                 // Error
                 if(currentPartName==""||currentPage->title.empty()){
                     printError(lineNo,"No Part assigned!");

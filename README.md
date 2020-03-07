@@ -29,12 +29,17 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com) [![Net
 <p>Could write in HTML too!</p>
 Inline [links!](https://abstractxan.xyz)
 Inline images ![images](./media/interface/favicon.ico)
+
+$$$ Seperate Pages
+## Seperate Page
+### Part
+Text
 ```
 
 ## Todo:
 
 ``` md
-- seperate pages
+- Different way to handle seperate pages
 - config file for head, header and footer
 - fix url and image parsing code by split string
 - adding classes to images
