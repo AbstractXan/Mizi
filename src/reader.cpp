@@ -1,14 +1,59 @@
 #include<string>
 #include<iostream>
 #include<fstream>
+#include<sstream>
 using namespace std;
 
-string html_head(string text){
-    return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' href='../media/interface/favicon.ico' type='image/x-icon'><link rel='icon' href='../media/interface/favicon.ico' type='image/x-icon'><meta charset='utf-8'><meta name='description' content=''><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content=''><meta name='twitter:title' content=''><meta name='twitter:description' content='Website generated using abstractxan/Mizi'><meta name='twitter:creator' content='@abstractxan'><meta name='twitter:image' content='../media/interface/logo.png'><meta property='og:title' content=''><meta property='og:site_name' content=''><title> Mizi  "+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
-}
-string html_header = "<header><a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a></header>";
+struct Config{
+    string shortcut_icon;
+    string icon;
+    string name;
+    string description;
+    string twitter_creator;
+    string header;
+    string footer;
+};
 
-string html_footer = "<footer><p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p></footer></body></html>";
+
+Config * configParser(){
+    Config * conf = new Config;
+    ifstream configFile ("config.txt");
+    if (configFile.is_open())
+    {
+    string line;
+    while( getline(configFile, line) ){
+        istringstream is_line(line);
+        string key;
+        if(getline(is_line, key, '=')){
+            string value;
+            if(getline(is_line, value)){ 
+                if(key=="shortcut_icon"){ conf->shortcut_icon=value;
+                } else if(key=="icon"){ conf->icon=value;
+                } else if(key=="name"){ conf->name=value;
+                } else if(key=="description"){ conf->description=value;
+                } else if(key=="creator"){ conf->twitter_creator=value;
+                } else if(key=="header"){ conf->header=value;
+                } else if(key=="footer"){ conf->footer=value;
+                } else {
+                    cout << "Config file syntax error." << endl;
+                }
+                }
+            }
+        }
+    }
+    configFile.close();
+    return conf;    
+}
+
+
+Config * conf;
+string html_head(string text){
+    return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' href='"+ conf->shortcut_icon +"' type='image/x-icon'><link rel='icon' href='"+conf->icon+"' type='image/x-icon'><meta charset='utf-8'><meta name='description' content='"+conf->description+"'><meta name='viewport' content='width=device-width, initial-scale=1.0'><meta name='twitter:card' content='summary'><meta name='twitter:site' content='"+conf->name+"'><meta name='twitter:title' content='"+conf->name+"'><meta name='twitter:description' content='"+conf->description+"'><meta name='twitter:creator' content='@"+conf->twitter_creator+"'><meta name='twitter:image' content='"+conf->icon+"'><meta property='og:title' content='"+conf->name+"'><meta property='og:site_name' content='"+conf->name+"'><title> "+conf->name+" - "+text+"</title><link rel='stylesheet' type='text/css' href='../links/main.css'></head><body class='"+text+"'>";
+}
+string html_header = "";
+
+string html_footer = "";
+
 
 char getLower(char c){
     if (c >= 'A' && c <='Z')

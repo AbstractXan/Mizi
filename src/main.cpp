@@ -9,9 +9,11 @@ void createSite(){
     cats = createCategories(&categoryCount);
     cout << "Categories found: " << categoryCount << endl;
 
-        
+    conf = configParser();
+    html_header = "<header>"+conf->header+"</header>";
+    html_footer = "<footer><p>"+conf->footer+"</p></footer></body></html>";
     //Debug categories
-    printContent(cats,categoryCount);
+    //printContent(cats,categoryCount);
 
     buildHome(cats,categoryCount);
     for(int i=0; i<=categoryCount;i++){ //Build all pages including seperate pages
