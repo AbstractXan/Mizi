@@ -25,6 +25,7 @@ Lorem Ipsum
 Dolor sit amet
 ### Third
 Consectetur adipiscing elit
+Hell!
 
 ## Unordered List
 ### UL
@@ -69,3 +70,11 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ###  
 - [Separate page](separate.html)
 - [Separate page2](separate2.html)
+
+
+## Tagging
+### Lorem Ipsum
+This post is {{tagged}}. Again {{tagged1}}.
+{{tag}}
+{{tag broken 1}
+{{tag broken 2
