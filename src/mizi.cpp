@@ -6,6 +6,7 @@
 
 using namespace std;
 
+
 struct Config {
   string shortcut_icon;
   string icon;
