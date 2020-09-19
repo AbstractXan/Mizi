@@ -1,0 +1,61 @@
+#include <fstream>
+#include <string>
+#include "../Config/config.hpp"
+#include "../../helpers/helpers.hpp"
+#include "header-footer.cpp"
+#include "page.hpp"
+#include "head.hpp"
+
+using namespace std;
+
+Page *createPage(string title)
+{
+    Page *newpage = new Page;
+    newpage->title = title;
+    newpage->partsCount = 0;
+    return newpage;
+}
+
+void addPart(Page *page, string name)
+{
+    page->partName[page->partsCount] = name;
+    page->partsCount++;
+}
+
+void buildPage(Config* conf, Page* page, string path) {
+  ofstream htmlPage;
+  string filename = toLowerCase(page->title);
+  string filepath = path + filename + ".html";
+  htmlPage.open(filepath.c_str());
+  htmlPage << html_head(conf, page->title);
+  htmlPage << getHeader(conf);
+  htmlPage << "<main class='page'>";
+  htmlPage << "<h1>" << page->title << "</h1>";
+
+  if (page->partsCount >= 3) {
+    htmlPage << "<ul class='jump'>";
+    for (int i = 0; i < page->partsCount; i++) {
+      string part_name = page->partName[i];
+      string part_index = toLowerCase(part_name);
+      htmlPage << "<li><a href='#" << part_index << "'>" << part_name
+               << "</a></li>";
+    }
+    htmlPage << "</ul>";
+  }
+
+  for (int i = 0; i < page->partsCount; i++) {
+    string part_name = page->partName[i];
+    string part_desc = page->partDesc[i];
+    string part_index = toLowerCase(part_name);
+    htmlPage << "</ul><h2 id='" << part_index << "'>" << part_name
+             << "</h2>"; // Extra </ul> to keep a check on overflowing <ul>
+    htmlPage << part_desc;
+  }
+
+  htmlPage << "<hr/>";
+  htmlPage << "</main>";
+  htmlPage << getFooter(conf);
+  htmlPage << "</body></html>";
+  htmlPage.close();
+}
+
