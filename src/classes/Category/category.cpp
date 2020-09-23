@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "../Page/page.hpp"
 #include "../../helpers/helpers.cpp"
