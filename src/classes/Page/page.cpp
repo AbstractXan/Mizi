@@ -1,7 +1,7 @@
 #include <fstream>
 #include <string>
 #include "../Config/config.hpp"
-#include "../../helpers/helpers.hpp"
+#include "../helpers/helpers.hpp"
 #include "header-footer.cpp"
 #include "page.hpp"
 #include "head.hpp"
