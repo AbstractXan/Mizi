@@ -1,14 +1,15 @@
 #include <string>
 #include <iostream>
 
+#include "helpers.hpp"
 using namespace std;
-char static getLower(char c)
+char getLower(char c)
 {
     if (c >= 'A' && c <= 'Z')
         return c - ('Z' - 'z');
     return c;
 }
-string static toLowerCase(string text)
+string toLowerCase(string text)
 {
     string newtext = "";
     for (unsigned int i = 0; i < text.size(); i++)
@@ -25,6 +26,6 @@ string static toLowerCase(string text)
     return newtext;
 }
 // Prints errorline
-void static printError(int linenumber, string text) {
+void printError(int linenumber, string text) {
   cout << "Error at line " << linenumber << ". " << text << endl;
 }

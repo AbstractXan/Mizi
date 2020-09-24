@@ -3,8 +3,8 @@
 #include <fstream>
 
 #include "../Page/page.hpp"
-#include "../../helpers/helpers.cpp"
-#include "../../helpers/linkparser.cpp"
+#include "../helpers/helpers.hpp"
+#include "../helpers/linkparser.cpp"
 #include "category.hpp"
 
 using namespace std;

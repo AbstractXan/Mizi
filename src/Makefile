@@ -13,22 +13,22 @@ mizi.o : mizi.cpp libs
 libs : category.o config.o \
 home.o page.o head.o helpers.o linkparser.o
 
-category.o : classes/Category/category.hpp classes/Category/category.cpp page.o 
+category.o : classes/Category/category.cpp page.o 
 	g++ -c classes/Category/category.cpp
 
 config.o : classes/Config/config.hpp classes/Config/config.cpp
 	g++ -c classes/Config/config.cpp
 
-home.o : classes/Home/home.hpp classes/Home/home.cpp
+home.o : classes/Home/home.cpp
 	g++ -c classes/Home/home.cpp
 
-page.o : classes/Page/page.hpp classes/Page/page.cpp classes/Category/category.hpp classes/Home/home.hpp
+page.o : classes/Page/page.cpp classes/Category/category.hpp classes/Home/home.hpp
 	g++ -c classes/Page/page.cpp
 
-head.o : classes/Page/head.hpp classes/Page/head.cpp
+head.o : classes/Page/head.cpp
 	g++ -c classes/Page/head.cpp
 
-helpers.o : helpers/helpers.hpp  helpers/helpers.cpp
+helpers.o : helpers/helpers.cpp
 	g++ -c helpers/helpers.cpp
 
 linkparser.o : helpers/linkparser.cpp
