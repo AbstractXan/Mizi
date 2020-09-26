@@ -2,10 +2,9 @@
 #include <string>
 #include <fstream>
 
-#include "../Page/page.hpp"
-#include "../helpers/helpers.hpp"
-#include "../helpers/linkparser.cpp"
-#include "category.hpp"
+#include "../include/page.hpp"
+#include "../include/helpers.hpp"
+#include "../include/category.hpp"
 
 using namespace std;
 
@@ -164,7 +163,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
     }
     else
     {
-        cout << "Unable to open file" << endl;
+        cout << "Unable to open file : " << filename << endl;
     }
     return Categories;
 }

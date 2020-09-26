@@ -1,11 +1,38 @@
 #include <string>
-#include "helpers.hpp"
+#include <iostream>
 
+#include "../include/helpers.hpp"
 using namespace std;
+char getLower(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+        return c - ('Z' - 'z');
+    return c;
+}
+string toLowerCase(string text)
+{
+    string newtext = "";
+    for (unsigned int i = 0; i < text.size(); i++)
+    {
+        if (text[i] == '\0')
+            break;
+        else if (text[i] == ' ')
+            newtext += '_';
+        else if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) //alphabets
+            newtext += getLower(text[i]);
+        else if (text[i] >= '0' && text[i] <= '9')
+            newtext += getLower(text[i]);
+    }
+    return newtext;
+}
+// Prints errorline
+void printError(int linenumber, string text) {
+  cout << "Error at line " << linenumber << ". " << text << endl;
+}
 
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
-string static parseLinks(string text, string path)
+string parseLinks(string text, string path)
 {
     string label = text;
     unsigned int index = 0;

@@ -3,11 +3,13 @@
 #include <sstream>
 #include <string>
 
-#include "../Page/head.hpp"
-#include "../Page/header-footer.cpp"
-#include "../../helpers/helpers.hpp"
-#include "../Category/category.hpp"
-#include "home.hpp"
+#include "../include/head.hpp"
+#include "../include/header-footer.hpp"
+#include "../include/helpers.hpp"
+#include "../include/category.hpp"
+#include "../include/home.hpp"
+
+using namespace std;
 
 void buildHome(Config *conf, Category *categories[], int categories_length, string path) {
   ofstream htmlHome;
