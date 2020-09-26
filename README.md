@@ -17,7 +17,7 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 - Update `src/config.txt`
 - Update `src/website.md` 
 - Delete files inside `./site` folder
-- Run `main.exe` to create site
+- Build using `cd src; ./build.sh` or Run `main` to create site
 - Open `index.html`
 
 ![](./media/mizi.png)

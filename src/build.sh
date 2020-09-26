@@ -5,4 +5,4 @@ rm main
 
 make
 
-./main -a
+./main -t -a
