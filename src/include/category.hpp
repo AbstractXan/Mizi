@@ -2,7 +2,7 @@
 
 #include<iostream>
 #include<string>
-#include "../Page/page.hpp"
+#include "page.hpp"
 
 struct Category
 {

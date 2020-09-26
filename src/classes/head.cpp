@@ -1,6 +1,6 @@
-#include "../Config/config.hpp"
+#include "../include/config.hpp"
 #include<string>
-#include "head.hpp"
+#include "../include/head.hpp"
 
 using namespace std;
 

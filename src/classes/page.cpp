@@ -1,10 +1,10 @@
 #include <fstream>
 #include <string>
-#include "../Config/config.hpp"
-#include "../helpers/helpers.hpp"
-#include "header-footer.cpp"
-#include "page.hpp"
-#include "head.hpp"
+#include "../include/config.hpp"
+#include "../include/helpers.hpp"
+#include "../include/header-footer.hpp"
+#include "../include/page.hpp"
+#include "../include/head.hpp"
 
 using namespace std;
 

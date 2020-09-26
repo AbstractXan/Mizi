@@ -3,19 +3,18 @@
 #include <sstream>
 #include <string>
 
-#include "classes/Config/config.hpp"
-#include "classes/Page/head.hpp"
-#include "classes/Page/page.hpp"
-#include "classes/Category/category.hpp"
-#include "classes/Home/home.hpp"
+#include "../include/config.hpp"
+#include "../include/head.hpp"
+#include "../include/page.hpp"
+#include "../include/category.hpp"
+#include "../include/home.hpp"
 
 
 using namespace std;
 
-void static createSite(string filename, string path)
+void createSite(string filename, string path)
 {
   Category *Categories[16];
-  
 
   Config *conf = configParser();
   Category **cats;

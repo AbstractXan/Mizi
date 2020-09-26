@@ -3,8 +3,8 @@
 #include <sstream>
 #include <string>
 
-#include "../../helpers/helpers.cpp"
-#include "config.hpp"
+#include "../include/config.hpp"
+#include "../include/helpers.hpp"
 
 using namespace std;
 

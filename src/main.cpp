@@ -1,5 +1,5 @@
 #include<fstream>
-#include"mizi.cpp"
+#include"include/mizi.hpp"
 using namespace std;
 
 int main(int argc,char *argv[]){

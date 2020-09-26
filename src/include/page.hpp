@@ -1,7 +1,7 @@
 #pragma once
 #include<string>
-#include"../Config/config.hpp"
-#include"../helpers/helpers.hpp"
+#include"config.hpp"
+#include"helpers.hpp"
 
 struct Page
 {
