@@ -30,6 +30,7 @@ void printError(int linenumber, string text) {
   cout << "Error at line " << linenumber << ". " << text << endl;
 }
 
+// {{tags}} -> <a class='tag' href='tags.html'> {{tags}}</a>
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
 string parseLinks(string text, string path)
@@ -77,7 +78,6 @@ string parseLinks(string text, string path)
             index++;
             continue;
 
-            //
         }
         else if (text[index] == '[')
         {
@@ -124,6 +124,10 @@ string parseLinks(string text, string path)
                         // Error [link](abc.com [link](abc.com)
                         if (text[index] == '[')
                         {
+                            if (isImage){
+                                newText += '!';
+                            }
+
                             newText += '[' + urlText + "](" + url;
                             urlText = "";
                             break;
@@ -144,7 +148,7 @@ string parseLinks(string text, string path)
                         else
                         {
                             index++;
-                            newText += " <a href='" + url + "'>" + urlText + "</a>";
+                            newText += "<a href='" + url + "'>" + urlText + "</a>";
                         }
                         url = "";
                         urlText = "";
@@ -154,12 +158,19 @@ string parseLinks(string text, string path)
 
                     if (index == text.size())
                     {
+                        if (isImage){
+                                newText += '!';
+                        }
+
                         newText += '[' + urlText + "](" + url;
                         continue;
                     }
                 }
                 else
                 {
+                    if (isImage){
+                        newText += '!';
+                    }
                     newText += '[' + urlText + ']';
                     urlText = "";
                     continue;
@@ -167,6 +178,9 @@ string parseLinks(string text, string path)
             }
             else
             {
+                if (isImage){
+                    newText += '!';
+                }
                 newText += '[' + urlText;
                 urlText = "";
                 continue;
