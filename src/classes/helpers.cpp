@@ -35,6 +35,7 @@ void printError(int linenumber, string text) {
 // ![altText](image) -> <img src='' alt=''>
 string parseLinks(string text, string path)
 {
+    path = "";
     string label = text;
     unsigned int index = 0;
     string newText = "";
@@ -46,30 +47,43 @@ string parseLinks(string text, string path)
     for (; index < text.size();)
     {
 
-        // If tag
-        if (isTag == true)
-        {
-            string tag = "";
-            while (text[index] != '}' && index < text.size())
-            {
-                tag += text[index];
-                index += 1;
-            }
-            index += 2; // Increment index to new text;
-
-            string filename = toLowerCase(tag);
-            string filepath = path + filename + ".html";
-            newText += "<a class='tag' href='" + filepath + "'>{{" + tag + "}}</a>";
-            isTag = false;
-            continue;
-        }
         // Check if tag
-        if (text[index] == '{' && text[index + 1] == '{')
+        if (text[index] == '{' && text[index + 1] == '{' && !isTag)
         {
             isTag = true;
             index += 2;
             continue;
         }
+        
+        // If tag
+        if (isTag == true)
+        {
+            string tag = "";
+            while (index < text.size())
+            {
+                if(text[index] == '}' && text[index+1] == '}'){
+                    string filename = toLowerCase(tag);
+                    string filepath = filename + ".html";
+                    newText += "<a class='tag' href='" + filepath + "'>{{" + tag + "}}</a>";
+                    isTag = false;
+                    break;
+                }
+                tag += text[index];
+                index += 1;
+            }
+
+            //if bad tags
+            if(index == text.size() && isTag == true){
+                newText += "{{" + tag;
+                isTag = false;
+            }
+
+            index += 2; // Increment index to new text;
+            continue;
+        }
+
+
+
         // Enter into linking
         // ![ -> image flag true
         if (text[index] == '!' && text[index + 1] == '[')

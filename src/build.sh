@@ -1,8 +1,8 @@
 #!/bin/bash
 
 rm ../site/*
-rm main
+rm mizi
 
 make
 
-./main -t -a
+./mizi -t -a

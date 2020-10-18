@@ -8,6 +8,8 @@
 
 using namespace std;
 
+string HELPER_DOMAIN = "helpers/";
+
 /** 
  * Data provider for testToLowerCase
  */
@@ -28,10 +30,12 @@ vector<tuple<string,string,string>> testToLowerCaseProvider(){
  * testToLowerCase
  */
 void testToLowerCase()
-{          
-    cout << "Testing testToLowerCase---" << endl;
+{         
+    cout << HELPER_DOMAIN << "toLowerCase" << endl;
 
     vector<tuple<string,string,string>> tests = testToLowerCaseProvider();
+    int passed=0;
+
     for(auto test : tests){
         
         string testname = get<0>(test);
@@ -41,7 +45,8 @@ void testToLowerCase()
         string actual = toLowerCase(input); 
         
         if( actual == expected){
-            cout << "  PASSED OK " << testname << endl;
+            //cout << "  PASSED OK " << testname << endl;
+            passed++;
         } else {
             cout << "  FAILED XX " << testname << endl;
             cout << "    INPUT : " << input << endl; 
@@ -51,6 +56,7 @@ void testToLowerCase()
         }
         
     }
+    cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
 }
 
 /** 
@@ -117,7 +123,7 @@ vector<tuple<string,string,string,string>> testParseLinksProvider(){
             path,
             "[urlTextOuter <a href='url'>urlText</a>](urlOutside)"),
         };
-    vector<tuple<string,string,string,string>> imageLinks = {
+    vector<tuple<string,string,string,string>> imageTests = {
 
         make_tuple(
             "Correct Image",
@@ -154,9 +160,29 @@ vector<tuple<string,string,string,string>> testParseLinksProvider(){
             "![altText]",
             path,
             "![altText]")
+        };
+
+    vector<tuple<string,string,string,string>> tagTests = {
+        make_tuple(
+            "Correct tag",
+            "{{tag}}",
+            path,
+            "<a class='tag' href='tag.html'>{{tag}}</a>"),
+        make_tuple(
+            "Wrong tag",
+            "text {{tag text",
+            path,
+            "text {{tag text"),
+        make_tuple(
+            "Wrong tag - missing {",
+            "text {tag text",
+            path,
+            "text {tag text")
+
     };
 
-    testParams.insert(testParams.begin(),imageLinks.begin(),imageLinks.end());
+    testParams.insert(testParams.begin(),tagTests.begin(),tagTests.end());
+    testParams.insert(testParams.begin(),imageTests.begin(),imageTests.end());
     testParams.insert(testParams.begin(),linkTests.begin(),linkTests.end());
     return testParams;
 }
@@ -166,9 +192,10 @@ vector<tuple<string,string,string,string>> testParseLinksProvider(){
  */
 void testParseLinks()
 {          
-    cout << "Testing testParseLinks ----" << endl;
+    cout << HELPER_DOMAIN << "parseLinks" << endl;
 
-    vector<tuple<string,string,string,string>> tests = testParseLinksProvider();
+    vector<tuple<string,string,string,string>> tests = testParseLinksProvider(); 
+    int passed = 0;
     for(auto test : tests){
         
         string testname = get<0>(test);
@@ -179,7 +206,8 @@ void testParseLinks()
         string actual = parseLinks(input1, input2); 
         
         if( actual == expected){
-            cout << "  PASSED OK " << testname << endl;
+            //cout << "  PASSED OK " << testname << endl;
+            passed++;
         } else {
             cout << "  FAILED XX " << testname << endl;
             cout << "    INPUT TEXT : " << input1 << endl; 
@@ -190,4 +218,5 @@ void testParseLinks()
         }
         
     }
+    cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
 }

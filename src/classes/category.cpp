@@ -30,7 +30,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
     string currentPartDesc = "";
 
     // Category for separate pages
-    Category *seperateCategory = createCategory(Categories, "SeperatePages", 0);
+    Category *separateCategory = createCategory(Categories, "SeparatePages", 0);
 
     ifstream mdFile(filename);
 
@@ -58,8 +58,8 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
 
             if (line[i] == '$' && line[i + 1] == '$' && line[i + 2] == '$')
             {
-                // Seperate page
-                currentCategory = seperateCategory;
+                // Separate page
+                currentCategory = separateCategory;
                 uList = false;
                 continue;
             }
@@ -182,7 +182,7 @@ void printContent(Category *cats[], int count) {
 
     for (int pageno = 0; pageno < tempCat.pageCount; pageno++) {
       Page tempPage = *tempCat.pages[pageno];
-      cout << "\t |" << tempPage.title << endl;
+      cout << "\t" << tempPage.title << endl;
 
       for (int partno = 0; partno < tempPage.partsCount; partno++) {
         cout << "\t\t |" << tempPage.partName[partno] << endl;
