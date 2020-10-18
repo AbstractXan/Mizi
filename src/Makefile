@@ -8,4 +8,4 @@ test:
 
 files = classes/*.cpp
 main:
-	g++ ${flags} ${files} main.cpp -o main
+	g++ ${flags} ${files} main.cpp -o mizi

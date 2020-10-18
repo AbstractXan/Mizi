@@ -20,10 +20,10 @@ void createSite(string filename, string path)
   Category **cats;
   int categoryCount = 0;
   cats = createCategories(Categories, &categoryCount, filename, path);
-  cout << "Categories found: " << categoryCount << endl;
 
   // Debug categories
-  // printContent(cats,categoryCount);
+  cout << "\nCategories found: " << categoryCount << endl;
+  printContent(cats,categoryCount);
 
   buildHome(conf, cats, categoryCount, path);
   for (int i = 0; i <= categoryCount; i++)
