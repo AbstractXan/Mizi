@@ -10,6 +10,7 @@ int main(int argc,char *argv[]){
         string arg(argv[i]);
         if (arg == "-t"){
             runTests();
+            return 0;
         }
     }
     createSite("website.md","../site/");

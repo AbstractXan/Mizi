@@ -14,14 +14,15 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 
 ## Download and run
 - Clone / Download this repository
+- Move into `src` by doind `cd src`
 - Update `src/config.txt`
-- Update `src/website.md` 
-- Delete files inside `./site` folder
-- Build using `cd src; ./build.sh` or Run `main` to create site
-- Open `index.html`
+- Update `src/website.md`
+- Build using `./build.sh` or Run `./mizi` to create site
+- Go up a directory `cd ..`
+- Open `index.html` which essentially opens `site/home.html`
 
 ![](./media/mizi.png)
-## Currently supported format:
+## Currently supported format
 
 - A config file for `<head>` , header and footer
 
@@ -42,10 +43,15 @@ $$$ Seperate Pages
 Text
 ```
 
-## Todo:
+## Todo
 
 ``` md
+- add template engine
+- setup better unit testing functionality
 - fix url and image parsing code by split string
 - adding classes to images
-- fix favicon icon
 ```
+
+## Contribute
+Open a new issue for bug / feature requests. PRs are welcome.
+

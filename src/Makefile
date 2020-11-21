@@ -6,6 +6,6 @@ testfiles = test/*.cpp
 test:
 	g++ ${flags} ${testfiles} test.cpp
 
-files = classes/*.cpp
+files = modules/*.cpp
 main:
 	g++ ${flags} ${files} main.cpp -o mizi
