@@ -1,8 +1,12 @@
 #!/bin/bash
 
-rm ../site/*
+rm ../site/*.html
 rm mizi
 
 make
 
-./mizi -t -a
+# Test
+./mizi -t
+
+# Build
+./mizi

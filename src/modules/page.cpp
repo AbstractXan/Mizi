@@ -22,7 +22,8 @@ void addPart(Page *page, string name)
     page->partsCount++;
 }
 
-void buildPage(Config* conf, Page* page, string path) {
+void buildPage(Config* conf, Page* page, string path) 
+{
   ofstream htmlPage;
   string filename = toLowerCase(page->title);
   string filepath = path + filename + ".html";
@@ -39,6 +40,7 @@ void buildPage(Config* conf, Page* page, string path) {
       string part_index = toLowerCase(part_name);
       htmlPage << "<li><a href='#" << part_index << "'>" << part_name
                << "</a></li>";
+
     }
     htmlPage << "</ul>";
   }
