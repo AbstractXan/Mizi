@@ -4,6 +4,5 @@ using namespace std;
 void runTests(){
 
     //Helper functions
-    testToLowerCase();
-    testParseLinks();
+    testHelpers();
 }

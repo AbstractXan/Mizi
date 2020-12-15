@@ -220,3 +220,8 @@ void testParseLinks()
     }
     cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
 }
+
+void testHelpers(){
+    testToLowerCase();
+    testParseLinks();
+}
