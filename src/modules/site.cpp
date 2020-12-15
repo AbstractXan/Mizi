@@ -23,7 +23,7 @@ void createSite(string filename, string path)
 
   // Debug categories
   cout << "\nCategories found: " << categoryCount << endl;
-  printContent(cats,categoryCount);
+  // printContent(cats,categoryCount);
 
   buildHome(conf, cats, categoryCount, path);
   for (int i = 0; i <= categoryCount; i++)
