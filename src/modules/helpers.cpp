@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "../include/helpers.hpp"
+#include "../include/template.hpp"
+
 using namespace std;
 char getLower(char c)
 {
@@ -37,7 +39,7 @@ string parseLinks(string text, string path)
 {
     path = "";
     string label = text;
-    unsigned int index = 0;
+    size_t index = 0;
     string newText = "";
     string urlText = "";
     string url = "";
@@ -81,8 +83,6 @@ string parseLinks(string text, string path)
             index += 2; // Increment index to new text;
             continue;
         }
-
-
 
         // Enter into linking
         // ![ -> image flag true
@@ -199,6 +199,11 @@ string parseLinks(string text, string path)
                 urlText = "";
                 continue;
             }
+        }
+        else if (text[index] == '?' )
+        {
+            // Check if Valid ?abc(asdf)
+            // Send values to template renderer
         }
         else
         {

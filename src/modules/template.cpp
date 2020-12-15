@@ -25,7 +25,7 @@ TemplateMap * templateParser()
   TemplateMap *tmap = new TemplateMap;
 
   Template *currTemplate;
-  bool isParsingTemplate = false;
+  bool isParsingTemplateText = false;
 
   ifstream templateFile("template.txt");
   if (templateFile.is_open())
@@ -34,22 +34,23 @@ TemplateMap * templateParser()
     while (getline(templateFile, line))
     {
         size_t i=0;
-        
+
         if(line.size()<1){
             // blanks
             continue;
         }
 
+        // Parse line
         while(i<line.size())
         {
             // if @@ => Create || create newTemplateFunction
             if(line[i]=='@' && line[i+1]=='@')
             {
                 
-                if(isParsingTemplate){
+                if(isParsingTemplateText){
                     tmap->insert(pair<std::string,Template*>(currTemplate->name,currTemplate));
-                    isParsingTemplate=false;
-                    continue;
+                    isParsingTemplateText=false;
+                    break;
                 }
                 i+=2;
                 // create template
@@ -67,8 +68,8 @@ TemplateMap * templateParser()
                 tokens.erase(tokens.begin()); // Remove name from args;
                 currTemplate->args = tokens;
 
-                isParsingTemplate = true;
-                continue;
+                isParsingTemplateText = true;
+                break;
             }
             i++;
         }
@@ -78,3 +79,6 @@ TemplateMap * templateParser()
   return tmap;
 }
 
+string templateRederer(){
+    
+}

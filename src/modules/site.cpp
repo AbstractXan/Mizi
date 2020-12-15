@@ -8,6 +8,7 @@
 #include "../include/page.hpp"
 #include "../include/category.hpp"
 #include "../include/home.hpp"
+#include "../include/template.hpp"
 
 
 using namespace std;
@@ -17,6 +18,8 @@ void createSite(string filename, string path)
   Category *Categories[16];
 
   Config *conf = configParser();
+  TemplateMap *tmap = templateParser();
+  
   Category **cats;
   int categoryCount = 0;
   cats = createCategories(Categories, &categoryCount, filename, path);
