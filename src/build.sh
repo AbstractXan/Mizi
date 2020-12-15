@@ -2,7 +2,6 @@
 
 rm ../site/*.html
 rm mizi
-
 make
 
 # Test
