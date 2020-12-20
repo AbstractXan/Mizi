@@ -1,6 +1,7 @@
 # Mizi
 
 ![](./media/interface/logo.png)
+
 A simple static website generator written in C++ that takes markdown format as input. 
 
 Inspired from [hundredrabbits/100r.co](https://github.com/hundredrabbits/100r.co)
