@@ -1,12 +1,11 @@
 # Mizi
 
 ![](./media/interface/logo.png)
-
-Aasdfasdf  simple static website generator written in C++ that takes markdown format as input. 
+A simple static website generator written in C++ that takes markdown format as input. 
 
 Inspired from [hundredrabbits/100r.co](https://github.com/hundredrabbits/100r.co)
 
-Cdsfasdfreasdfasdfaated for my website [abstractxan.xyz](https://abstractxan.xyz)
+Created for my website [abstractxan.xyz](https://abstractxan.xyz)
 
 Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com) 
 
