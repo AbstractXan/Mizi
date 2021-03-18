@@ -78,5 +78,6 @@
         "string_view": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }

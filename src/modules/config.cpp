@@ -52,6 +52,9 @@ Config * configParser()
           {
             conf->footer = value;
           }
+          else if (key=="templatefile"){
+            conf->templatefile = value;
+          }
           else
           {
             cout << "Config file syntax error." << endl;

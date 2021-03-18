@@ -11,6 +11,7 @@ struct Config
   std::string twitter_creator;
   std::string header;
   std::string footer;
+  std::string templatefile;
 };
 
 Config * configParser();
