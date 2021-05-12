@@ -17,7 +17,7 @@ Category *createCategory(Category *Categories[16], string name, int count)
     return newCategory;
 }
 
-Category **createCategories(Category *Categories[16], int *categoryCount, string filename, string path)
+Category **createCategories(Category *Categories[16], int *categoryCount, string filename, string path, TemplateManager* TemplateMgr)
 {
 
     string line;
@@ -48,7 +48,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                 continue;
             }
 
-            line = parseLinks(line, path);
+            line = parseLinks(line, path, TemplateMgr);
 
             // Removing unwanted spaces
             while (line[i] == ' ')

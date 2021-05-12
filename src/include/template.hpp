@@ -8,9 +8,22 @@ struct Template
 {
   std::string name;
   std::vector<std::string> args;
+
+  std::vector<std::string> text;
+  std::vector<std::string> argOrder;
 };
+
 typedef std::map<std::string, Template *> TemplateMap;
 
-TemplateMap *templateParser(std::string templateFile);
-std::string templateRenderer();
-std::vector<std::string> split(const std::string &, const std::string &);
+class TemplateManager
+{
+  private:
+  void templateCreatorParser(std::string templateFile);
+  TemplateMap *tmap;
+
+  public:
+  TemplateManager(std::string templateFile);
+  // Read string from md like: {{template}}
+  std::string templateReaderParser(std::string);
+  std::string templateRenderer();
+};

@@ -7,37 +7,14 @@
 
 using namespace std;
 
-/** 
- * Tokenizes based on delims
- */
-vector<string> split(const std::string &str, const std::string &delims = " ")
-{
-    vector<string> tokens;
-    std::size_t nextIndex, currIndex = 0;
-    // Find next instance of delim
-    nextIndex = str.find_first_of(delims);
-    // While delims exist
-    while (nextIndex != std::string::npos)
-    {
-        // Add token
-        tokens.push_back(str.substr(currIndex, nextIndex - currIndex));
-        currIndex = nextIndex + 1;
-        nextIndex = str.find_first_of(delims, currIndex);
-    }
-    // Push last string chunk
-    if (currIndex < str.size()){
-        tokens.push_back(str.substr(currIndex, str.size() - currIndex));
-    }
-    return tokens;
+TemplateManager::TemplateManager(std::string templateFile){
+    this->templateCreatorParser(templateFile);
 }
-
 /**
- * Parses templatefile
+ * Parses templatefile and stores in tmap
  */
-TemplateMap *templateParser(string templatefile)
+void TemplateManager::templateCreatorParser(std::string templatefile)
 {
-    TemplateMap *tmap = new TemplateMap;
-
     Template *currTemplate;
     bool isParsingTemplate = false;
 
@@ -52,18 +29,20 @@ TemplateMap *templateParser(string templatefile)
             if (line.size() < 1)
                 continue; //blanks
 
+            // if @@ => start/end of template
+            bool isTemplateStartOrEnd = (line[i] == '@' && line[i + 1] == '@');
+            
             // Parse line
             while (i < line.size())
             {
-                // if @@ => start/end of template
-                bool isTemplateStartOrEnd = (line[i] == '@' && line[i + 1] == '@');
+                
                 // start of template
                 if (isTemplateStartOrEnd && !isParsingTemplate)
                 {
                     i += 2;
                     // create template
                     currTemplate = new Template;
-                    vector<string> tokens = split(line.substr(i, line.size() - i + 1), "@(,)");
+                    vector<string> tokens = tokenizer(line.substr(i, line.size() - i + 1), "@(,)");
 
                     // Assign temporarily
                     currTemplate->name = tokens[0];
@@ -76,7 +55,8 @@ TemplateMap *templateParser(string templatefile)
                 // If faces '@@' and  already parsing -> end and save template
                 else if (isTemplateStartOrEnd && isParsingTemplate)
                 {
-                    tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
+                    // Store in Template map of Template Manager
+                    this->tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
                     isParsingTemplate = false;
                     break;
                 }
@@ -89,9 +69,12 @@ TemplateMap *templateParser(string templatefile)
         }
         templateFile.close();
     }
-    return tmap;
 }
 
-string templateRederer()
+std::string TemplateManager::templateReaderParser(std::string){
+    return "hello";
+}
+string TemplateManager::templateRenderer()
 {
+    return "hello";
 }

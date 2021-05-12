@@ -32,10 +32,33 @@ void printError(int linenumber, string text) {
   cout << "Error at line " << linenumber << ". " << text << endl;
 }
 
-// {{tags}} -> <a class='tag' href='tags.html'> {{tags}}</a>
+/** 
+ * Tokenizes string based on delims
+ */
+vector<string> tokenizer(const std::string &str, const std::string &delims = " ")
+{
+    vector<string> tokens;
+    std::size_t nextIndex, currIndex = 0;
+    // Find next instance of delim
+    nextIndex = str.find_first_of(delims);
+    // While delims exist
+    while (nextIndex != std::string::npos)
+    {
+        // Add token
+        tokens.push_back(str.substr(currIndex, nextIndex - currIndex));
+        currIndex = nextIndex + 1;
+        nextIndex = str.find_first_of(delims, currIndex);
+    }
+    // Push last string chunk
+    if (currIndex < str.size()){
+        tokens.push_back(str.substr(currIndex, str.size() - currIndex));
+    }
+    return tokens;
+}
+
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
-string parseLinks(string text, string path)
+string parseLinks(string text, string path, TemplateManager* templateMgr)
 {
     path = "";
     string label = text;
@@ -44,40 +67,38 @@ string parseLinks(string text, string path)
     string urlText = "";
     string url = "";
     bool isImage = false;
-    bool isTag = false;
+    bool isTemplate = false;
 
     for (; index < text.size();)
     {
 
-        // Check if tag
-        if (text[index] == '{' && text[index + 1] == '{' && !isTag)
+        // Check if template
+        if (text[index] == '{' && text[index + 1] == '{' && !isTemplate)
         {
-            isTag = true;
+            isTemplate = true;
             index += 2;
             continue;
         }
         
-        // If tag
-        if (isTag == true)
+        // If template
+        if (isTemplate == true)
         {
-            string tag = "";
+            string templateString = "";
             while (index < text.size())
             {
                 if(text[index] == '}' && text[index+1] == '}'){
-                    string filename = toLowerCase(tag);
-                    string filepath = filename + ".html";
-                    newText += "<a class='tag' href='" + filepath + "'>{{" + tag + "}}</a>";
-                    isTag = false;
+                    newText += templateMgr->templateReaderParser(templateString);
+                    isTemplate = false;
                     break;
                 }
-                tag += text[index];
+                templateString += text[index];
                 index += 1;
             }
 
             //if bad tags
-            if(index == text.size() && isTag == true){
-                newText += "{{" + tag;
-                isTag = false;
+            if(index == text.size() && isTemplate == true){
+                newText += "{{" + templateString;
+                isTemplate = false;
             }
 
             index += 2; // Increment index to new text;

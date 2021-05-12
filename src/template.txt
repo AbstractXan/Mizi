@@ -1,4 +1,4 @@
 @@Card(title,desc)
-<h1>{title}<h2>
-<p>{desc}</p>
+<h1>$$title$$<h2>
+<p>$$desc$$</p>
 @@

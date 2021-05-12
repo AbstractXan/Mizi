@@ -1,0 +1,9 @@
+@@Card(title,desc)
+<h1>$$title$$<h2>
+<p>$$desc$$</p>
+@@
+
+@@Card2(title,desc)
+<h1>$$title$$<h2>
+<p>$$desc$$</p>
+@@
