@@ -8,6 +8,7 @@
 using namespace std;
 
 TemplateManager::TemplateManager(std::string templateFile){
+    this->tmap = new TemplateMap; 
     this->templateCreatorParser(templateFile);
 }
 /**
@@ -68,6 +69,8 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
             }
         }
         templateFile.close();
+    }else{
+        cout << "[!] Provided template file not found in given path [!]" << endl;
     }
 }
 

@@ -2,7 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 struct Template
 {
@@ -13,7 +13,7 @@ struct Template
   std::vector<std::string> argOrder;
 };
 
-typedef std::map<std::string, Template *> TemplateMap;
+typedef std::unordered_map<std::string, Template *> TemplateMap;
 
 class TemplateManager
 {
