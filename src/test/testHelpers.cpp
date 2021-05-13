@@ -14,7 +14,7 @@ string HELPER_DOMAIN = "helpers/";
  * Data provider for testTokenizer
  * Returns <line,delims,expected_tokens> 
  */
-vector<tuple<string, string, string, vector<string> > > testTokenizerProvider()
+vector<tuple<string, string, string, vector<string>>> testTokenizerProvider()
 {
     return {
         // Tests for splits used in templates
@@ -129,13 +129,13 @@ void testToLowerCase()
 /** 
  * Data provider for testParseLinks
  */
-vector<tuple<string, string, string, TemplateManager* , string>> testParseLinksProvider()
+vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksProvider()
 {
     string path = "../site/";
 
     vector<tuple<string, string, string, TemplateManager *, string>> testParams;
 
-    vector<tuple<string, string, string, TemplateManager*, string>> imageTests = {
+    vector<tuple<string, string, string, TemplateManager *, string>> imageTests = {
 
         make_tuple(
             "Correct Image",
@@ -180,8 +180,8 @@ vector<tuple<string, string, string, TemplateManager* , string>> testParseLinksP
             "![altText]"),
     };
 
-    vector< tuple<string, string, string, TemplateManager*, string> >testLinks = {
-        
+    vector<tuple<string, string, string, TemplateManager *, string>> testLinks = {
+
         make_tuple(
             "Correct Link",
             "[urlText](url)",
@@ -259,32 +259,44 @@ vector<tuple<string, string, string, TemplateManager* , string>> testParseLinksP
             nullptr,
             "[urlTextOuter <a href='url'>urlText</a>](urlOutside)"),
     };
-    
+
     // TEMPLATES
-    // TemplateManager tmpMgr("test/testFiles/testTemplates.txt");
-    // vector<tuple<string, string, string, TemplateManager*, string>> templateTests = {
-    //     make_tuple(
-    //         "Correct template",
-    //         "{{template}}",
-    //         path,
-    //         &tmpMgr,
-    //         "<a class='template' href='template.html'>{{template}}</a>"),
-    //     make_tuple(
-    //         "Wrong template",
-    //         "text {{template text",
-    //         path,
-    //         &tmpMgr,
-    //         "text {{template text"),
-    //     make_tuple(
-    //         "Wrong template - missing {",
-    //         "text {template text",
-    //         path,
-    //         &tmpMgr,
-    //         "text {template text")
+    TemplateManager tmpMgr("test/testFiles/testTemplates.txt");
+    vector<tuple<string, string, string, TemplateManager *, string>> templateTests = {
+        make_tuple(
+            "Correct template -- no args",
+            "{{Card}}",
+            path,
+            &tmpMgr,
+            "Card"),
+        make_tuple(
+            "Correct template -- one arg",
+            "{{Card title=Title}}",
+            path,
+            &tmpMgr,
+            "Card title Title"),
+        make_tuple(
+            "Correct template -- two args",
+            "{{Card title=Title desc=Desc}}",
+            path,
+            &tmpMgr,
+            "Card title Title desc Desc"),
+        make_tuple(
+            "Wrong template",
+            "text {{Card text",
+            path,
+            &tmpMgr,
+            "text {{Card text"),
+        make_tuple(
+            "Wrong template - missing {",
+            "text {Card text",
+            path,
+            &tmpMgr,
+            "text {Card text")
 
-    // };
+    };
 
-    //testParams.insert(testParams.begin(), templateTests.begin(), templateTests.end());
+    testParams.insert(testParams.begin(), templateTests.begin(), templateTests.end());
     testParams.insert(testParams.begin(), imageTests.begin(), imageTests.end());
     testParams.insert(testParams.begin(), testLinks.begin(), testLinks.end());
     return testParams;
@@ -297,8 +309,8 @@ void testParseLinks()
 {
     cout << HELPER_DOMAIN << "parseLinks" << endl;
 
-    vector<tuple<string, string, string, TemplateManager* , string>> tests = testParseLinksProvider();
-    
+    vector<tuple<string, string, string, TemplateManager *, string>> tests = testParseLinksProvider();
+
     int passed = 0;
     for (auto test : tests)
     {
@@ -306,7 +318,7 @@ void testParseLinks()
         string testname = get<0>(test);
         string input1 = get<1>(test);
         string input2 = get<2>(test);
-        TemplateManager * tmag = get<3>(test);
+        TemplateManager *tmag = get<3>(test);
         string expected = get<4>(test);
 
         string actual = parseLinks(input1, input2, tmag);
@@ -333,5 +345,5 @@ void testHelpers()
 {
     testTokenizer();
     testToLowerCase();
-    testParseLinks();
+    //testParseLinks();
 }

@@ -58,6 +58,7 @@ vector<string> tokenizer(const std::string &str, const std::string &delims = " "
 
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
+// {{templateName param1=value1 param2=value2}}
 string parseLinks(string text, string path, TemplateManager* templateMgr)
 {
     path = "";
@@ -95,7 +96,7 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
                 index += 1;
             }
 
-            //if bad tags
+            //if bad template
             if(index == text.size() && isTemplate == true){
                 newText += "{{" + templateString;
                 isTemplate = false;
