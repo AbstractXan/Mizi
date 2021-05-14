@@ -129,6 +129,8 @@ void testToLowerCase()
 
 /** 
  * Data provider for testParseLinks
+ * Tests images, links and template
+ * @see testTemplateManager for more template rendering related tests
  */
 vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksProvider()
 {
@@ -269,19 +271,19 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
             "{{Card}}",
             path,
             &tmpMgr,
-            "Card"),
+            "title : desc"),
         make_tuple(
             "Correct template -- one arg",
             "{{Card title=Title}}",
             path,
             &tmpMgr,
-            "Card title Title"),
+            "Title : desc"),
         make_tuple(
             "Correct template -- two args",
             "{{Card title=Title desc=Desc}}",
             path,
             &tmpMgr,
-            "Card title Title desc Desc"),
+            "Title : Desc"),
         make_tuple(
             "Wrong template",
             "text {{Card text",
@@ -298,8 +300,8 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
     };
 
     testParams.insert(testParams.begin(), templateTests.begin(), templateTests.end());
-    testParams.insert(testParams.begin(), imageTests.begin(), imageTests.end());
-    testParams.insert(testParams.begin(), testLinks.begin(), testLinks.end());
+    //testParams.insert(testParams.begin(), imageTests.begin(), imageTests.end());
+    //testParams.insert(testParams.begin(), testLinks.begin(), testLinks.end());
     return testParams;
 }
 
@@ -327,6 +329,7 @@ void testParseLinks()
         if (actual == expected)
         {
             //cout << "  PASSED OK " << testname << endl;
+        
             passed++;
         }
         else
@@ -346,5 +349,5 @@ void testHelpers()
 {
     testTokenizer();
     testToLowerCase();
-    //testParseLinks();
+    testParseLinks();
 }

@@ -72,9 +72,6 @@ Text! ![image](../media/interface/favicon.ico) !Text
 - [Separate page2](separate2.html)
 
 
-## Tagging
+## Templates
 ### Lorem Ipsum
-This post is {{tagged}}. Again {{tagged1}}.
-{{tag}}
-{{tag broken 1}
-{{tag broken 2
+This post is {{Card title=Woo desc=Boom}}

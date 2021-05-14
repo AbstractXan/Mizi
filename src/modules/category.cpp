@@ -48,6 +48,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                 continue;
             }
 
+            // All the magic happens here
             line = parseLinks(line, path, TemplateMgr);
 
             // Removing unwanted spaces

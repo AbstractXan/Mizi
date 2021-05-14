@@ -33,41 +33,33 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
 
             // if @@ => start/end of template
             bool isTemplateStartOrEnd = (line[i] == '@' && line[i + 1] == '@');
-
-            // Parse line
-            while (i < line.size())
+            // start of template
+            if (isTemplateStartOrEnd && !isParsingTemplate)
             {
+                i += 2;
+                // create template
+                currTemplate = new Template;
+                vector<string> tokens = tokenizer(line.substr(i, line.size() - i + 1), "@(,)");
 
-                // start of template
-                if (isTemplateStartOrEnd && !isParsingTemplate)
-                {
-                    i += 2;
-                    // create template
-                    currTemplate = new Template;
-                    vector<string> tokens = tokenizer(line.substr(i, line.size() - i + 1), "@(,)");
+                // Assign temporarily
+                currTemplate->name = tokens[0];
+                tokens.erase(tokens.begin()); // Remove name from args;
+                currTemplate->args = tokens;
 
-                    // Assign temporarily
-                    currTemplate->name = tokens[0];
-                    tokens.erase(tokens.begin()); // Remove name from args;
-                    currTemplate->args = tokens;
-
-                    isParsingTemplate = true;
-                    break;
-                }
-                // If faces '@@' and  already parsing -> end and save template
-                else if (isTemplateStartOrEnd && isParsingTemplate)
-                {
-                    // Store in Template map of Template Manager
-                    this->tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
-                    isParsingTemplate = false;
-                    currTemplate = nullptr;
-                    break;
-                }
-                else if (isParsingTemplate)
-                {
-                    parseAndSaveTemplateContent(currTemplate, line);
-                }
-                i++;
+                isParsingTemplate = true;
+            }
+            // If faces '@@' and  already parsing -> end and save template
+            else if (isTemplateStartOrEnd && isParsingTemplate)
+            {
+                // Store in Template map of Template Manager
+                this->tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
+                isParsingTemplate = false;
+                currTemplate = nullptr;
+            }
+            else if (isParsingTemplate)
+            {
+                //cout << "Parsing :  " << line << endl;
+                parseAndSaveTemplateContent(currTemplate, line);
             }
         }
         templateFile.close();
@@ -82,34 +74,41 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
 // template arg1 value1 arg2 value2
 std::string TemplateManager::templateReaderParser(std::string templateText)
 {
-    // Get template name and args
-    // std::string test_output = "";
-    vector<string> tokens = tokenizer(templateText, "= ");
-    // for(auto str: tokens){
-    //     test_output+= str + " ";
-    // }
-    // if(!test_output.empty())
-    //     test_output.pop_back();
 
+    // Get template name and args
+    vector<string> tokens = tokenizer(templateText, "= ");
+    //cout << "tokens: " << printVector(tokens) << endl;
     std::string templateName = tokens[0];
 
     //TODO: verify template name
     //TODO: verify arg names and numbers
     //if (!VerifyTemplateHeaders(tokens))
     // return "";
-
-    auto argValMap = this->generateTemplateArgValueMap(tokens);
+    auto argValMapPtr = generateTemplateArgValueMap(tokens);
     // Use this map to replace args;
-    //return test_output;
-
-    return "";
+    auto templatePtr = this->getTemplate(templateName);
+    if (templatePtr)
+    {
+        return renderTemplate(templatePtr, argValMapPtr);
+    }
+    return templateText;
 }
-string TemplateManager::templateRenderer()
+/**
+ * getter for Template reference
+ * @param TemplateName
+ * @return TemplatePtr or nullptr
+ */
+Template *TemplateManager::getTemplate(std::string templateName)
 {
-    return "hello";
+    auto tmapItr = this->tmap->find(templateName);
+    if (tmapItr != this->tmap->end())
+    {
+        return tmapItr->second;
+    }
+    return nullptr;
 }
 
-std::unordered_map<std::string, std::string> *TemplateManager::generateTemplateArgValueMap(std::vector<std::string> args)
+std::unordered_map<std::string, std::string> *generateTemplateArgValueMap(std::vector<std::string> args)
 {
 
     std::unordered_map<std::string, std::string> *argValMap = new std::unordered_map<std::string, std::string>;
@@ -182,16 +181,16 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
             if (argParseSuccessful && arg != "")
             {
                 // cout << "SAVING TEXT: '" << text << "'" << endl;
-                template_ptr->text.push_back(text);
+                template_ptr->textContentList.push_back(text);
                 text = "";
 
                 // cout << "SAVING ARG: '" << arg << "'" << endl;
-                template_ptr->args.push_back(arg);
+                template_ptr->argContentList.push_back(arg);
 
                 i += 2;
             }
             else
-            {   // Append to text if not successful
+            { // Append to text if not successful
                 // cout << "WRONG ARG PARSE: '" << arg << "'" << endl;
                 text += "$$" + arg;
             }
@@ -202,5 +201,41 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
             i++;
         }
     }
-    template_ptr->text.push_back(text);
+    template_ptr->textContentList.push_back(text);
+}
+
+/**
+ * renderTemplate with given argument values
+ */
+std::string renderTemplate(Template *template_ptr, std::unordered_map<std::string, std::string> *argValMap)
+{
+    std::string ret = "";
+    // Alternatively render textChunks and argChunks
+    // While replacing argChunks with corresponding value;
+    for (size_t index = 0; index < template_ptr->textContentList.size(); index++)
+    {
+
+        ret += template_ptr->textContentList[index];
+
+        if (index < template_ptr->argContentList.size())
+        {
+            auto argValueMapPtr = argValMap->find(template_ptr->argContentList[index]);
+
+            // If not found, append arg name instead
+            if (argValueMapPtr == argValMap->end())
+            {
+                // cout << "ADD ARG NAME:  " << template_ptr->argContentList[index] << endl;
+                ret += template_ptr->argContentList[index];
+            }
+            else
+            {
+                // cout << "ADD ARG VAL: " << argValueMapPtr->second << endl;
+                ret += argValueMapPtr->second;
+            }
+        }
+    }
+
+    // Delete ArgMap;
+    argValMap->clear();
+    return ret;
 }

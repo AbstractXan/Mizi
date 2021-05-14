@@ -3,6 +3,6 @@
 using namespace std;
 
 void runTests(){
-    testHelpers();
     testTemplate();
+    testHelpers();
 }

@@ -1,9 +1,8 @@
 @@Card(title,desc)
-<h1>$$title$$<h2>
-<p>$$desc$$</p>
+$$title$$ : $$desc$$
 @@
 
 @@Card2(title,desc)
-<h1>$$title$$<h2>
+<h1>$$title$$</h1>
 <p>$$desc$$</p>
 @@

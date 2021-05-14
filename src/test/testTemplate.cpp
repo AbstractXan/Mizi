@@ -34,13 +34,12 @@ void testGenerateTemplateArgValueMap()
 
     int passed = 0;
 
-    TemplateManager tmpMgr("test/testFiles/testTemplates.txt");
     for (auto test : tests)
     {
         string testname = test.first;
         vector<string> input = test.second;
 
-        std::unordered_map<std::string, std::string> *argMap = tmpMgr.generateTemplateArgValueMap(input);
+        std::unordered_map<std::string, std::string> *argMap = generateTemplateArgValueMap(input);
 
         bool hasErrors = false;
         for (size_t index = 1; index < input.size(); index++)
@@ -118,6 +117,12 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
             "$$arg$$$$arg2$$",
             vector<string>({"", "", ""}),
             vector<string>({"arg", "arg2"})),
+
+        make_tuple(
+            "Content with arg between text",
+            "text $$arg$$ text",
+            vector<string>({"text ", " text"}),
+            vector<string>({"arg",})),
     };
 
     vector<tuple<string, string, vector<string>, vector<string>>> errorPathTestParams = {
@@ -134,7 +139,7 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
         make_tuple(
             "Content with correct and wrong arg syntax",
             "$$arg1$$ $$arg$",
-            vector<string>({""," $$arg$"}),
+            vector<string>({"", " $$arg$"}),
             vector<string>({"arg1"})),
         make_tuple(
             "Content with space in arg name",
@@ -168,8 +173,8 @@ void testParseAndSaveTemplateContent()
         Template *tempPtr = new Template;
         parseAndSaveTemplateContent(tempPtr, input);
 
-        bool argsMatch = tempPtr->args == expectedArgs;
-        bool textMatch = tempPtr->text == expectedText;
+        bool argsMatch = tempPtr->argContentList == expectedArgs;
+        bool textMatch = tempPtr->textContentList == expectedText;
         if (argsMatch && textMatch)
         {
             //cout << "  PASSED OK " << testname << endl;
@@ -180,9 +185,9 @@ void testParseAndSaveTemplateContent()
             cout << "  FAILED XX " << testname << endl;
             cout << "    INPUT : " << input << endl;
             cout << "    EXPECTED ARGS : " << printVector(expectedArgs) << endl;
-            cout << "    ACTUAL ARGS: " << printVector(tempPtr->args) << endl;
+            cout << "    ACTUAL ARGS: " << printVector(tempPtr->argContentList) << endl;
             cout << "    EXPECTED TEXT : " << printVector(expectedText) << endl;
-            cout << "    ACTUAL TEXT: " << printVector(tempPtr->text) << endl
+            cout << "    ACTUAL TEXT: " << printVector(tempPtr->textContentList) << endl
                  << endl;
             //assert(0);
         }
@@ -190,8 +195,61 @@ void testParseAndSaveTemplateContent()
     cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
 }
 
+vector<tuple<string, string, string>> testTemplateManagerProvider(){
+    return {
+        make_tuple(
+            "Template no args{{Card}}", 
+            "Card", 
+            "title : desc"),
+        make_tuple(
+            "Template w/ argument", 
+            "Card title=Title", 
+            "Title : desc"),
+        make_tuple(
+            "Template w/ two arguments", 
+            "Card title=TITLE desc=DESC", 
+            "TITLE : DESC"),
+    };
+}
+/**
+ * Tests TemplateManager
+ */
+void testTemplateManager()
+{
+    TemplateManager TMgr("test/testFiles/testTemplates.txt");
+
+    auto tests = testTemplateManagerProvider();
+
+    int passed = 0;
+
+    for (auto test : tests)
+    {
+        string testname = get<0>(test);
+        string input = get<1>(test);
+        string expected = get<2>(test);
+
+        string actual = TMgr.templateReaderParser(input);
+
+        if (expected == actual)
+        {
+            //cout << "  PASSED OK " << testname << endl;
+            passed++;
+        }
+        else
+        {
+            cout << "  FAILED XX " << testname << endl;
+            cout << "    INPUT : " << input << endl;
+            cout << "    EXPECTED : " << expected << endl;
+            cout << "    ACTUAL : " << actual << endl
+                 << endl;
+        }
+    }
+    cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
+}
+
 void testTemplate()
 {
+    testTemplateManager();
     testGenerateTemplateArgValueMap();
     testParseAndSaveTemplateContent();
 }

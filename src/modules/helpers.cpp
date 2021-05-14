@@ -28,15 +28,17 @@ string toLowerCase(string text)
     return newtext;
 }
 // Prints errorline
-void printError(int linenumber, string text) {
-  cout << "Error at line " << linenumber << ". " << text << endl;
+void printError(int linenumber, string text)
+{
+    cout << "Error at line " << linenumber << ". " << text << endl;
 }
 
 /** 
  * Tokenizes string based on delims
  * @param stringPtr
+ * @param delims Default value = " "
  */
-vector<string> tokenizer(const std::string &stringPtr, const std::string &delims = " ")
+vector<string> tokenizer(const std::string stringPtr, const std::string &delims = " ")
 {
     vector<string> tokens;
     std::size_t nextIndex, currIndex = 0;
@@ -51,16 +53,18 @@ vector<string> tokenizer(const std::string &stringPtr, const std::string &delims
         nextIndex = stringPtr.find_first_of(delims, currIndex);
     }
     // Push last string chunk
-    if (currIndex < stringPtr.size()){
+    if (currIndex < stringPtr.size())
+    {
         tokens.push_back(stringPtr.substr(currIndex, stringPtr.size() - currIndex));
     }
+
     return tokens;
 }
 
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
 // {{templateName param1=value1 param2=value2}}
-string parseLinks(string text, string path, TemplateManager* templateMgr)
+string parseLinks(string text, string path, TemplateManager *templateMgr)
 {
     path = "";
     string label = text;
@@ -69,28 +73,22 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
     string urlText = "";
     string url = "";
     bool isImage = false;
-    bool isTemplate = false;
 
     for (; index < text.size();)
     {
 
         // Check if template
-        if (text[index] == '{' && text[index + 1] == '{' && !isTemplate)
+        if (text[index] == '{' && index + 1 < text.size() && text[index + 1] == '{')
         {
-            isTemplate = true;
             index += 2;
-            continue;
-        }
-        
-        // If template
-        if (isTemplate == true)
-        {
+
             string templateString = "";
+            bool templateParseSuccessful = false;
             while (index < text.size())
             {
-                if(text[index] == '}' && text[index+1] == '}'){
-                    newText += templateMgr->templateReaderParser(templateString);
-                    isTemplate = false;
+                if (text[index] == '}' && text[index + 1] == '}')
+                {
+                    templateParseSuccessful = true;
                     break;
                 }
                 templateString += text[index];
@@ -98,23 +96,24 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
             }
 
             //if bad template
-            if(index == text.size() && isTemplate == true){
-                newText += "{{" + templateString;
-                isTemplate = false;
+            if (templateParseSuccessful)
+            {
+                newText += templateMgr->templateReaderParser(templateString);
+                index += 2;
             }
-
-            index += 2; // Increment index to new text;
-            continue;
+            else
+            {
+                newText += "{{" + templateString;
+            }
         }
 
         // Enter into linking
         // ![ -> image flag true
-        if (text[index] == '!' && text[index + 1] == '[')
+        else if (text[index] == '!' && text[index + 1] == '[')
         {
             isImage = true;
             index++;
             continue;
-
         }
         else if (text[index] == '[')
         {
@@ -161,7 +160,8 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
                         // Error [link](abc.com [link](abc.com)
                         if (text[index] == '[')
                         {
-                            if (isImage){
+                            if (isImage)
+                            {
                                 newText += '!';
                             }
 
@@ -195,8 +195,9 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
 
                     if (index == text.size())
                     {
-                        if (isImage){
-                                newText += '!';
+                        if (isImage)
+                        {
+                            newText += '!';
                         }
 
                         newText += '[' + urlText + "](" + url;
@@ -205,7 +206,8 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
                 }
                 else
                 {
-                    if (isImage){
+                    if (isImage)
+                    {
                         newText += '!';
                     }
                     newText += '[' + urlText + ']';
@@ -215,7 +217,8 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
             }
             else
             {
-                if (isImage){
+                if (isImage)
+                {
                     newText += '!';
                 }
                 newText += '[' + urlText;
