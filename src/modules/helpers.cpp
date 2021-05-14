@@ -34,24 +34,25 @@ void printError(int linenumber, string text) {
 
 /** 
  * Tokenizes string based on delims
+ * @param stringPtr
  */
-vector<string> tokenizer(const std::string &str, const std::string &delims = " ")
+vector<string> tokenizer(const std::string &stringPtr, const std::string &delims = " ")
 {
     vector<string> tokens;
     std::size_t nextIndex, currIndex = 0;
     // Find next instance of delim
-    nextIndex = str.find_first_of(delims);
+    nextIndex = stringPtr.find_first_of(delims);
     // While delims exist
     while (nextIndex != std::string::npos)
     {
         // Add token
-        tokens.push_back(str.substr(currIndex, nextIndex - currIndex));
+        tokens.push_back(stringPtr.substr(currIndex, nextIndex - currIndex));
         currIndex = nextIndex + 1;
-        nextIndex = str.find_first_of(delims, currIndex);
+        nextIndex = stringPtr.find_first_of(delims, currIndex);
     }
     // Push last string chunk
-    if (currIndex < str.size()){
-        tokens.push_back(str.substr(currIndex, str.size() - currIndex));
+    if (currIndex < stringPtr.size()){
+        tokens.push_back(stringPtr.substr(currIndex, stringPtr.size() - currIndex));
     }
     return tokens;
 }
@@ -221,11 +222,6 @@ string parseLinks(string text, string path, TemplateManager* templateMgr)
                 urlText = "";
                 continue;
             }
-        }
-        else if (text[index] == '?' )
-        {
-            // Check if Valid ?abc(asdf)
-            // Send values to template renderer
         }
         else
         {

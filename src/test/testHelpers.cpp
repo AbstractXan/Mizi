@@ -12,7 +12,8 @@ using namespace std;
 string HELPER_DOMAIN = "helpers/";
 /** 
  * Data provider for testTokenizer
- * Returns <line,delims,expected_tokens> 
+ * @param void
+ * @return [ Line, Delims, Expected Tokens ]
  */
 vector<tuple<string, string, string, vector<string>>> testTokenizerProvider()
 {

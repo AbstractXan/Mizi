@@ -1,6 +1,7 @@
 {
     "editor.formatOnSave": true,
     "files.associations": {
+        "*.cpp": "cpp",
         "cmath": "cpp",
         "cstddef": "cpp",
         "cstdint": "cpp",
@@ -77,7 +78,8 @@
         "stack": "cpp",
         "string_view": "cpp",
         "unordered_map": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "filesystem": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

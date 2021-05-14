@@ -65,7 +65,7 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
                 }
                 else if (isParsingTemplate)
                 {
-                    //this->parseAndSaveTemplateContent(currTemplate, line);
+                    parseAndSaveTemplateContent(currTemplate, line);
                 }
                 i++;
             }
@@ -99,6 +99,7 @@ std::string TemplateManager::templateReaderParser(std::string templateText)
     // return "";
 
     auto argValMap = this->generateTemplateArgValueMap(tokens);
+    // Use this map to replace args;
     //return test_output;
 
     return "";
@@ -119,24 +120,87 @@ std::unordered_map<std::string, std::string> *TemplateManager::generateTemplateA
         if (i % 2 == 0)
         {
             argValMap->insert(std::make_pair(args[i - 1], args[i]));
-            std::cout << args[i - 1] << " " << args[i] << std::endl;
         }
     }
     return argValMap;
 }
-
-void TemplateManager::parseAndSaveTemplateContent(Template *temp, std::string content)
+/**
+ * Parses a line inside template body in template.txt
+ * Saves parsed text and args into the template
+ * 
+ * @param template_ptr 
+ * @param TemplateText
+ * @return void
+ */
+void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
 {
     size_t i = 0, lineSize = content.size();
 
-    std::string arg = "", stringChunk = "";
-    bool isArg = false;
+    // For content "<p> text <p>"
+    // text = [ "<p> text <p>" ]
+    // arg = [ ]
+
+    // For content "<p> $$var$$ <p>"
+    // text = [ "<p> " , " <p>" ]
+    // arg = [ "var" ]
+
+    // For content "$$var$$ boop!"
+    // text = [ "" , " boop!" ]
+    // arg = [ "var" ]
+
+    // variables are case sensitive
+    // it is recommended to not use spacing when using variables:
+    // $$ var $$ will give " var " as variable name and will not be the same as "var"
+
+    std::string text = "";
 
     while (i < lineSize)
     {
+        // If not an arg and we see '$$'
         if (i + 1 < lineSize && content[i] == '$' && content[i + 1] == '$')
         {
-            return;
+            i += 2;
+            bool argParseSuccessful = false;
+            bool hasSpace = false;
+
+            // Parse through arg
+            string arg = "";
+            while (i < lineSize && content[i] != '$')
+            {
+                if (content[i] == ' ')
+                {
+                    hasSpace = true;
+                    break;
+                }
+                arg += content[i];
+                i++;
+            }
+
+            //Complete parsing an arg when we see '$$' at the end
+            argParseSuccessful = !hasSpace && (i + 1 < lineSize && content[i] == '$' && content[i + 1] == '$');
+
+            if (argParseSuccessful && arg != "")
+            {
+                // cout << "SAVING TEXT: '" << text << "'" << endl;
+                template_ptr->text.push_back(text);
+                text = "";
+
+                // cout << "SAVING ARG: '" << arg << "'" << endl;
+                template_ptr->args.push_back(arg);
+
+                i += 2;
+            }
+            else
+            {   // Append to text if not successful
+                // cout << "WRONG ARG PARSE: '" << arg << "'" << endl;
+                text += "$$" + arg;
+            }
+        }
+        else
+        {
+            text += content[i];
+            i++;
         }
     }
+    template_ptr->text.push_back(text);
 }
