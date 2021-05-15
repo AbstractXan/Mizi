@@ -82,47 +82,49 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
 {
     vector<tuple<string, string, vector<string>, vector<string>>> testParams;
     vector<tuple<string, string, vector<string>, vector<string>>> happyPathTestParams = {
+        // Every text has argstring attached to it.
+        // Renders like TextString then ArgString
         make_tuple(
             "Content with No Arg",
             "Hello World",
             vector<string>({"Hello World"}),
-            vector<string>({})),
+            vector<string>({""})),
 
         make_tuple(
             "Content with One Arg",
             "Hello $$world$$",
             vector<string>({"Hello ", ""}),
-            vector<string>({"world"})),
+            vector<string>({"world",""})),
 
         make_tuple(
             "Content with Two Args",
             "Hello $$world$$ $$arg2$$",
             vector<string>({"Hello ", " ", ""}),
-            vector<string>({"world", "arg2"})),
+            vector<string>({"world", "arg2", ""})),
 
         make_tuple(
             "Content with no text",
             "",
             vector<string>({""}),
-            vector<string>({})),
+            vector<string>({""})),
 
         make_tuple(
             "Content with no text and one arg",
             "$$arg$$",
             vector<string>({"", ""}),
-            vector<string>({"arg"})),
+            vector<string>({"arg",""})),
 
         make_tuple(
             "Content with no text and two arg",
             "$$arg$$$$arg2$$",
             vector<string>({"", "", ""}),
-            vector<string>({"arg", "arg2"})),
+            vector<string>({"arg", "arg2",""})),
 
         make_tuple(
             "Content with arg between text",
             "text $$arg$$ text",
             vector<string>({"text ", " text"}),
-            vector<string>({"arg",})),
+            vector<string>({"arg",""})),
     };
 
     vector<tuple<string, string, vector<string>, vector<string>>> errorPathTestParams = {
@@ -130,22 +132,22 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
             "Content with missing starting '$'",
             "$arg$$",
             vector<string>({"$arg$$"}),
-            vector<string>({})),
+            vector<string>({""})),
         make_tuple(
             "Content with missing end '$'",
             "$$arg$",
             vector<string>({"$$arg$"}),
-            vector<string>({})),
+            vector<string>({""})),
         make_tuple(
             "Content with correct and wrong arg syntax",
             "$$arg1$$ $$arg$",
             vector<string>({"", " $$arg$"}),
-            vector<string>({"arg1"})),
+            vector<string>({"arg1", ""})),
         make_tuple(
             "Content with space in arg name",
             "$$arg $$",
             vector<string>({"$$arg $$"}),
-            vector<string>({})),
+            vector<string>({""})),
     };
 
     testParams.insert(testParams.begin(), errorPathTestParams.begin(), errorPathTestParams.end());
@@ -216,6 +218,7 @@ vector<tuple<string, string, string>> testTemplateManagerProvider(){
  */
 void testTemplateManager()
 {
+    cout << TEMPLATE_DOMAIN << "templateManager" << endl;
     TemplateManager TMgr("test/testFiles/testTemplates.txt");
 
     auto tests = testTemplateManagerProvider();
@@ -249,7 +252,9 @@ void testTemplateManager()
 
 void testTemplate()
 {
+
+    // Test Re
     testTemplateManager();
+    testParseAndSaveTemplateContent();    
     testGenerateTemplateArgValueMap();
-    testParseAndSaveTemplateContent();
 }

@@ -151,8 +151,9 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
     // it is recommended to not use spacing when using variables:
     // $$ var $$ will give " var " as variable name and will not be the same as "var"
 
+    // Every text should have an arg attached to it
     std::string text = "";
-
+    std::string arg = "";
     while (i < lineSize)
     {
         // If not an arg and we see '$$'
@@ -163,7 +164,7 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
             bool hasSpace = false;
 
             // Parse through arg
-            string arg = "";
+            arg = "";
             while (i < lineSize && content[i] != '$')
             {
                 if (content[i] == ' ')
@@ -180,19 +181,21 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
 
             if (argParseSuccessful && arg != "")
             {
-                // cout << "SAVING TEXT: '" << text << "'" << endl;
+                // Push text then arg content
+                //cout << "SAVING TEXT: '" << text << "'" << endl;
                 template_ptr->textContentList.push_back(text);
                 text = "";
 
                 // cout << "SAVING ARG: '" << arg << "'" << endl;
                 template_ptr->argContentList.push_back(arg);
-
+                arg="";
                 i += 2;
             }
             else
             { // Append to text if not successful
                 // cout << "WRONG ARG PARSE: '" << arg << "'" << endl;
                 text += "$$" + arg;
+                arg = "";
             }
         }
         else
@@ -201,7 +204,9 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
             i++;
         }
     }
+    // Push text then arg content
     template_ptr->textContentList.push_back(text);
+    template_ptr->argContentList.push_back(arg); 
 }
 
 /**
@@ -215,6 +220,9 @@ std::string renderTemplate(Template *template_ptr, std::unordered_map<std::strin
     for (size_t index = 0; index < template_ptr->textContentList.size(); index++)
     {
 
+        printVector(template_ptr->textContentList);
+        printVector(template_ptr->argContentList);
+        
         ret += template_ptr->textContentList[index];
 
         if (index < template_ptr->argContentList.size())

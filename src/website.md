@@ -73,5 +73,12 @@ Text! ![image](../media/interface/favicon.ico) !Text
 
 
 ## Templates
-### Lorem Ipsum
-This post is {{Card title=Woo desc=Boom}}
+### SingleLineNoArg
+{{SingleLineTemplateNoArg}}
+### SingleLineOneArg
+{{SingleLineTemplateOneArg var=value1}}
+{{SingleLineTemplateOneArg var=value2}}
+### MultiLineNoArg
+{{MultiLineTemplateNoArg}}
+### MultiLineOneArg
+{{MultiLineTemplateOneArg var=value1}}

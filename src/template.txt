@@ -1,3 +1,21 @@
-@@Card(title,desc)
-aaaaaa
+@@SingleLineTemplateNoArg
+This is a template with no arg!
 @@
+
+@@SingleLineTemplateOneArg(var)
+This is a template with arg=$$var$$
+@@
+
+@@MultiLineTemplateNoArg
+LINE ONE
+This is a template with no arg!
+LINE TWO
+@@
+
+@@MultiLineTemplateOneArg(var)
+LINE ONE
+This is a template with one arg = $$var$$
+LINE TWO
+@@
+
+

@@ -300,8 +300,8 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
     };
 
     testParams.insert(testParams.begin(), templateTests.begin(), templateTests.end());
-    //testParams.insert(testParams.begin(), imageTests.begin(), imageTests.end());
-    //testParams.insert(testParams.begin(), testLinks.begin(), testLinks.end());
+    testParams.insert(testParams.begin(), imageTests.begin(), imageTests.end());
+    testParams.insert(testParams.begin(), testLinks.begin(), testLinks.end());
     return testParams;
 }
 
