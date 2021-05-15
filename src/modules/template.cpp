@@ -19,7 +19,7 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
 {
     Template *currTemplate = nullptr;
     bool isParsingTemplate = false;
-
+    bool hasMultipleLines = false;
     ifstream templateFile(templatefile);
     if (templateFile.is_open())
     {
@@ -53,13 +53,19 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
             {
                 // Store in Template map of Template Manager
                 this->tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
+                
                 isParsingTemplate = false;
                 currTemplate = nullptr;
+                hasMultipleLines = false;
             }
             else if (isParsingTemplate)
             {
+                
                 //cout << "Parsing :  " << line << endl;
-                parseAndSaveTemplateContent(currTemplate, line);
+                parseAndSaveTemplateContent(currTemplate, line, hasMultipleLines);
+                if(!hasMultipleLines){
+                    hasMultipleLines = true;
+                }
             }
         }
         templateFile.close();
@@ -129,27 +135,33 @@ std::unordered_map<std::string, std::string> *generateTemplateArgValueMap(std::v
  * 
  * @param template_ptr 
  * @param TemplateText
+ * @param isMultiLine True when given line isn't the first line in template
  * @return void
  */
-void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
+void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bool isMultiLine=false)
 {
+    if(isMultiLine){
+        template_ptr->textContentList.push_back("<br>");
+        template_ptr->argContentList.push_back("");
+    }
+    
     size_t i = 0, lineSize = content.size();
 
     // For content "<p> text <p>"
     // text = [ "<p> text <p>" ]
-    // arg = [ ]
+    // arg = [ "" ]
 
     // For content "<p> $$var$$ <p>"
     // text = [ "<p> " , " <p>" ]
-    // arg = [ "var" ]
+    // arg = [ "var" , ""]
 
     // For content "$$var$$ boop!"
     // text = [ "" , " boop!" ]
-    // arg = [ "var" ]
+    // arg = [ "var" , ""]
 
     // variables are case sensitive
-    // it is recommended to not use spacing when using variables:
-    // $$ var $$ will give " var " as variable name and will not be the same as "var"
+    // no spacing allowed when using variables:
+    // $$ var $$ will just give you $$ var $$ as output
 
     // Every text should have an arg attached to it
     std::string text = "";
@@ -206,7 +218,7 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content)
     }
     // Push text then arg content
     template_ptr->textContentList.push_back(text);
-    template_ptr->argContentList.push_back(arg); 
+    template_ptr->argContentList.push_back(arg);
 }
 
 /**

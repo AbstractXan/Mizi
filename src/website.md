@@ -78,7 +78,15 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ### SingleLineOneArg
 {{SingleLineTemplateOneArg var=value1}}
 {{SingleLineTemplateOneArg var=value2}}
+### SingleLineMultipleArg
+{{SingleLineTemplateMultipleArg var1=value1 var2=value2}}
 ### MultiLineNoArg
 {{MultiLineTemplateNoArg}}
 ### MultiLineOneArg
 {{MultiLineTemplateOneArg var=value1}}
+### MultiLineMultpleArg
+{{MultiLineTemplateMultipleArg var1=value1 var2=value2}}
+
+### Bad Syntax Examples
+- {{InexistentTemplate}}
+- {{SingleLineTemplateNoArg} <- Wrong Syntax

@@ -6,6 +6,10 @@ This is a template with no arg!
 This is a template with arg=$$var$$
 @@
 
+@@SingleLineTemplateMultipleArg(var1,var2)
+First arg=$$var1$$ | Second arg=$$var2$$
+@@
+
 @@MultiLineTemplateNoArg
 LINE ONE
 This is a template with no arg!
@@ -16,6 +20,11 @@ LINE TWO
 LINE ONE
 This is a template with one arg = $$var$$
 LINE TWO
+@@
+
+@@MultiLineTemplateMultipleArg(var1,var2)
+LINE ONE : var1=$$var1$$
+LINE TWO : var2=$$var2$$
 @@
 
 

@@ -28,6 +28,6 @@ public:
   Template *getTemplate(std::string templateName);
 };
 
-void parseAndSaveTemplateContent(Template *temp, std::string templateContent);
+void parseAndSaveTemplateContent(Template *temp, std::string templateContent, bool hasMultipleLines);
 std::unordered_map<std::string, std::string> *generateTemplateArgValueMap(std::vector<std::string> args);
 std::string renderTemplate(Template *template_ptr, std::unordered_map<std::string, std::string> *argValMap);

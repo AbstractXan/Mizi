@@ -173,7 +173,7 @@ void testParseAndSaveTemplateContent()
         vector<string> expectedArgs = get<3>(test);
 
         Template *tempPtr = new Template;
-        parseAndSaveTemplateContent(tempPtr, input);
+        parseAndSaveTemplateContent(tempPtr, input, false);
 
         bool argsMatch = tempPtr->argContentList == expectedArgs;
         bool textMatch = tempPtr->textContentList == expectedText;
