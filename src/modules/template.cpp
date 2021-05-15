@@ -97,7 +97,7 @@ std::string TemplateManager::templateReaderParser(std::string templateText)
     {
         return renderTemplate(templatePtr, argValMapPtr);
     }
-    return templateText;
+    return "{{"+templateText+"}}";
 }
 /**
  * getter for Template reference
@@ -144,7 +144,7 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bo
         template_ptr->textContentList.push_back("<br>");
         template_ptr->argContentList.push_back("");
     }
-    
+
     size_t i = 0, lineSize = content.size();
 
     // For content "<p> text <p>"

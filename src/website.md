@@ -88,5 +88,5 @@ Text! ![image](../media/interface/favicon.ico) !Text
 {{MultiLineTemplateMultipleArg var1=value1 var2=value2}}
 
 ### Bad Syntax Examples
-- {{InexistentTemplate}}
+- {{NonexistentTemplate}}
 - {{SingleLineTemplateNoArg} <- Wrong Syntax
