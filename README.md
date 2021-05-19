@@ -2,11 +2,11 @@
 
 ![](./media/interface/logo.png)
 
-Aasdfasdf  simple static website generator written in C++ that takes markdown format as input. 
+A simple static website generator written in C++ that takes markdown format as input. 
 
 Inspired from [hundredrabbits/100r.co](https://github.com/hundredrabbits/100r.co)
 
-Cdsfasdfreasdfasdfaated for my website [abstractxan.xyz](https://abstractxan.xyz)
+Created for my website [abstractxan.xyz](https://abstractxan.xyz)
 
 Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com) 
 
@@ -22,14 +22,15 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 - Open `index.html` which essentially opens `site/home.html`
 
 ![](./media/mizi.png)
-## Currently supported format
+## Currently supported features:
 
-- A config file for `<head>` , header and footer
-
+1. Inputs a single markdown file as input
+2. Configurable `<head>` and header and footer for every page
+3. Create reusable components using templates
 ``` md
 # Category
 ## Page
-### Part
+### Section
 - First
 - Second
 - Third
@@ -39,15 +40,16 @@ Inline images ![images](./media/interface/favicon.ico)
 
 $$$ Seperate Pages
 ## Seperate Page
-### Part
+### Section
 Text
 ```
+
+- A config file for `<head>` , header and footer
 
 ## Todo
 
 ``` md
-- add template engine
-- setup better unit testing functionality
+- write better test cases for template engine
 - fix url and image parsing code by split string
 - adding classes to images
 ```

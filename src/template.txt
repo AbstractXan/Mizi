@@ -27,4 +27,14 @@ LINE ONE : var1=$$var1$$
 LINE TWO : var2=$$var2$$
 @@
 
+@@TemplateHeader
+This is template
+@@
 
+@@TemplatePage
+This is a page
+@@
+
+@@TemplateSection
+This is a section
+@@

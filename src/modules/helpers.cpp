@@ -40,6 +40,7 @@ void printError(int linenumber, string text)
  */
 vector<string> tokenizer(const std::string stringPtr, const std::string &delims = " ")
 {
+
     vector<string> tokens;
     std::size_t nextIndex, currIndex = 0;
     // Find next instance of delim

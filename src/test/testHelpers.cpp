@@ -295,7 +295,26 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
             "text {Card text",
             path,
             &tmpMgr,
-            "text {Card text")
+            "text {Card text"),
+        make_tuple(
+            "Template for header",
+            "# {{Card title=Title desc=Desc}}",
+            path,
+            &tmpMgr,
+            "# Title : Desc"),
+        make_tuple(
+            "Template for page",
+            "## {{Card title=Title desc=Desc}}",
+            path,
+            &tmpMgr,
+            "## Title : Desc"),
+        make_tuple(
+            "Template for header",
+            "### {{Card title=Title desc=Desc}}",
+            path,
+            &tmpMgr,
+            "### Title : Desc"),
+
 
     };
 
@@ -329,7 +348,7 @@ void testParseLinks()
         if (actual == expected)
         {
             //cout << "  PASSED OK " << testname << endl;
-        
+
             passed++;
         }
         else

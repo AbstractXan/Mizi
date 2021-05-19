@@ -76,7 +76,8 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ### SingleLineNoArg
 {{SingleLineTemplateNoArg}}
 ### SingleLineOneArg
-{{SingleLineTemplateOneArg var=value1}}
+{{variable = asdfasf}}
+{{SingleLineTemplateOneArg var=variable }}
 {{SingleLineTemplateOneArg var=value2}}
 ### SingleLineMultipleArg
 {{SingleLineTemplateMultipleArg var1=value1 var2=value2}}
@@ -90,3 +91,8 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ### Bad Syntax Examples
 - {{NonexistentTemplate}}
 - {{SingleLineTemplateNoArg} <- Wrong Syntax
+
+# {{TemplateHeader}}
+## {{TemplatePage}}
+### {{TemplateSection}}
+Text
