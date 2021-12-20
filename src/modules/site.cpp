@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <filesystem>
 
 #include "../include/config.hpp"
 #include "../include/head.hpp"
@@ -14,6 +15,12 @@ using namespace std;
 
 void createSite(string filename, string path)
 {
+  std::filesystem::path site_path{path.data()};
+  if (!std::filesystem::exists(site_path))
+  {
+    std::filesystem::create_directory(site_path);
+  }
+
   Category *Categories[16];
 
   Config *conf = configParser();

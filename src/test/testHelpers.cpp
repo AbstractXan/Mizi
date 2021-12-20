@@ -134,7 +134,7 @@ void testToLowerCase()
  */
 vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksProvider()
 {
-    string path = "../site/";
+    string path = "site/";
 
     vector<tuple<string, string, string, TemplateManager *, string>> testParams;
 
