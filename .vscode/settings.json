@@ -79,7 +79,9 @@
         "string_view": "cpp",
         "unordered_map": "cpp",
         "vector": "cpp",
-        "filesystem": "cpp"
+        "filesystem": "cpp",
+        "__bits": "cpp",
+        "clocale": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
