@@ -1,6 +1,6 @@
 #pragma once
 
-#include<string>
+#include <string>
 
 struct Config
 {
@@ -12,6 +12,9 @@ struct Config
   std::string header;
   std::string footer;
   std::string templatefile;
+  std::string css;
+  std::string site;
+  std::string head; // used for adding scripts to <head>
 };
 
-Config * configParser();
+Config *configParser();

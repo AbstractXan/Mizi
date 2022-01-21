@@ -235,3 +235,36 @@ string parseLinks(string text, string path, TemplateManager *templateMgr)
     }
     return newText;
 }
+
+std::string defaultCSS("");
+std::string defaultTemplate("");
+
+void checkProjectFileStructure(Config *conf)
+{
+    checkAndCreateDirectory(conf->site);
+    checkFile(conf->css, defaultCSS);
+    checkFile(conf->templatefile, defaultTemplate);
+}
+
+void checkFile(std::string path, std::string defaultData)
+{
+    std::ifstream file(path.data());
+
+    if (!file.is_open())
+    {
+        // Create default config.txt when not present
+        std::fstream fileWrite(path.data(), std::ios_base::app);
+        fileWrite.write(defaultData.data(), defaultData.size());
+        fileWrite.close();
+    }
+}
+
+void checkAndCreateDirectory(std::string path)
+{
+    std::filesystem::path dir_path{path};
+    if (!std::filesystem::exists(dir_path))
+    {
+        cout << "[Config] Creating directory path: " << path << endl;
+        std::filesystem::create_directory(dir_path);
+    }
+}

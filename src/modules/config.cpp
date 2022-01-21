@@ -7,7 +7,7 @@
 #include "../include/helpers.hpp"
 
 using namespace std;
-std::string defaultConfig("shortcut_icon=../media/interface/favicon.ico\nicon=../media/interface/favicon.ico\nname=Mizi\ndescription=Site generated using Mizi\ncreator=abstractxan\nheader=<a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a>\nfooter=<p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p>\ntemplatefile=template.txt");
+std::string defaultConfig("shortcut_icon=../media/interface/favicon.ico\nicon=../media/interface/favicon.ico\nname=Mizi\ndescription=Site generated using Mizi\ncreator=abstractxan\nheader=<a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a>\nfooter=<p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p>\ntemplatefile=template.txt\ncss=style.css\nsite=site/\nhead=<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>");
 
 Config *configParser()
 {
@@ -16,12 +16,11 @@ Config *configParser()
   if (!configFile.is_open())
   {
     // Create default config.txt when not present
-    fstream configFileWrite("config.txt", std::ios_base::app);
-    configFileWrite.write(defaultConfig.data(), defaultConfig.size());
-    configFileWrite.close();
-
+    checkFile("config.txt", defaultConfig);
+    // Check file existence
     configFile.open("config.txt");
   }
+
   string line;
   while (getline(configFile, line))
   {
@@ -63,6 +62,18 @@ Config *configParser()
         else if (key == "templatefile")
         {
           conf->templatefile = value;
+        }
+        else if (key == "css")
+        {
+          conf->css = value;
+        }
+        else if (key == "site")
+        {
+          conf->site = value;
+        }
+        else if (key == "head")
+        {
+          conf->head = value;
         }
         else
         {

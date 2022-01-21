@@ -53,17 +53,18 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
             {
                 // Store in Template map of Template Manager
                 this->tmap->insert(pair<std::string, Template *>(currTemplate->name, currTemplate));
-                
+
                 isParsingTemplate = false;
                 currTemplate = nullptr;
                 hasMultipleLines = false;
             }
             else if (isParsingTemplate)
             {
-                
+
                 //cout << "Parsing :  " << line << endl;
                 parseAndSaveTemplateContent(currTemplate, line, hasMultipleLines);
-                if(!hasMultipleLines){
+                if (!hasMultipleLines)
+                {
                     hasMultipleLines = true;
                 }
             }
@@ -72,6 +73,13 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
     }
     else
     {
+        // if (!configFile.is_open()){
+        //     // Create default config.txt when not present
+        //     fstream configFileWrite("config.txt", std::ios_base::app);
+        // configFileWrite.write(defaultConfig.data(), defaultConfig.size());
+        // configFileWrite.close();
+
+        // configFile.open("config.txt");
         cout << "[!] Provided template file not found in given path [!]" << endl;
     }
 }
@@ -97,7 +105,7 @@ std::string TemplateManager::templateReaderParser(std::string templateText)
     {
         return renderTemplate(templatePtr, argValMapPtr);
     }
-    return "{{"+templateText+"}}";
+    return "{{" + templateText + "}}";
 }
 /**
  * getter for Template reference
@@ -138,9 +146,10 @@ std::unordered_map<std::string, std::string> *generateTemplateArgValueMap(std::v
  * @param isMultiLine True when given line isn't the first line in template
  * @return void
  */
-void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bool isMultiLine=false)
+void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bool isMultiLine = false)
 {
-    if(isMultiLine){
+    if (isMultiLine)
+    {
         template_ptr->textContentList.push_back("<br>");
         template_ptr->argContentList.push_back("");
     }
@@ -200,7 +209,7 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bo
 
                 // cout << "SAVING ARG: '" << arg << "'" << endl;
                 template_ptr->argContentList.push_back(arg);
-                arg="";
+                arg = "";
                 i += 2;
             }
             else
@@ -234,7 +243,7 @@ std::string renderTemplate(Template *template_ptr, std::unordered_map<std::strin
 
         printVector(template_ptr->textContentList);
         printVector(template_ptr->argContentList);
-        
+
         ret += template_ptr->textContentList[index];
 
         if (index < template_ptr->argContentList.size())
