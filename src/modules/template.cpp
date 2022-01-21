@@ -74,12 +74,12 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
     else
     {
         // if (!configFile.is_open()){
-        //     // Create default config.txt when not present
-        //     fstream configFileWrite("config.txt", std::ios_base::app);
+        //     // Create default config.conf when not present
+        //     fstream configFileWrite("config.conf", std::ios_base::app);
         // configFileWrite.write(defaultConfig.data(), defaultConfig.size());
         // configFileWrite.close();
 
-        // configFile.open("config.txt");
+        // configFile.open("config.conf");
         cout << "[!] Provided template file not found in given path [!]" << endl;
     }
 }

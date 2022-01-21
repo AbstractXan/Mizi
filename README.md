@@ -15,7 +15,7 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 ## Download and run
 - Clone / Download this repository
 - Move into `src` by doind `cd src`
-- Update `src/config.txt`
+- Update `src/config.conf` for your webpages
 - Update `src/website.md`
 - Build using `./build.sh` or Run `./mizi` to create site
 - Go up a directory `cd ..`
@@ -26,7 +26,9 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 
 1. Inputs a single markdown file as input
 2. Configurable `<head>` and header and footer for every page
-3. Create reusable components using templates
+3. Create reusable components using templates by updating `templates.conf`
+
+
 ``` md
 # Category
 ## Page
@@ -49,9 +51,7 @@ Text
 ## Todo
 
 ``` md
-- write better test cases for template engine
-- fix url and image parsing code by split string
-- adding classes to images
+
 ```
 
 ## Contribute

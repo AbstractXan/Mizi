@@ -7,18 +7,18 @@
 #include "../include/helpers.hpp"
 
 using namespace std;
-std::string defaultConfig("shortcut_icon=../media/interface/favicon.ico\nicon=../media/interface/favicon.ico\nname=Mizi\ndescription=Site generated using Mizi\ncreator=abstractxan\nheader=<a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a>\nfooter=<p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p>\ntemplatefile=template.txt\ncss=style.css\nsite=site/\nhead=<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>");
+std::string defaultConfig("shortcut_icon=../media/interface/favicon.ico\nicon=../media/interface/favicon.ico\nname=Mizi\ndescription=Site generated using Mizi\ncreator=abstractxan\nheader=<a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a>\nfooter=<p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p>\ntemplatefile=template.conf\ncss=style.css\nsite=site/\nhead=<script id='MathJax-script' async src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'></script>");
 
 Config *configParser()
 {
   Config *conf = new Config;
-  ifstream configFile("config.txt");
+  ifstream configFile("config.conf");
   if (!configFile.is_open())
   {
-    // Create default config.txt when not present
-    checkFile("config.txt", defaultConfig);
+    // Create default config.conf when not present
+    checkFile("config.conf", defaultConfig);
     // Check file existence
-    configFile.open("config.txt");
+    configFile.open("config.conf");
   }
 
   string line;

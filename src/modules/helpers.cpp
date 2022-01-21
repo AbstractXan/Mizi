@@ -252,7 +252,7 @@ void checkFile(std::string path, std::string defaultData)
 
     if (!file.is_open())
     {
-        // Create default config.txt when not present
+        // Create default config.conf when not present
         std::fstream fileWrite(path.data(), std::ios_base::app);
         fileWrite.write(defaultData.data(), defaultData.size());
         fileWrite.close();
