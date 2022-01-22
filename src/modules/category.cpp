@@ -42,7 +42,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
             int hashcount = 0;
             int i = 0;
 
-            if (line == " ")
+            if (line == "")
             {
                 currentPartDesc += "<br>";
                 continue;
@@ -57,7 +57,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                 i++;
             }
 
-            if (line.substr(i,5) == "# $$$")
+            if (line.substr(i, 5) == "# $$$")
             {
                 // Separate page
                 currentCategory = separateCategory;
@@ -113,7 +113,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                     // Current Part Name
                     currentPartName = line.substr(i + 1, line.size() - i);
                     addPart(currentPage, currentPartName);
-                    currentPartDesc = "<p>";
+                    currentPartDesc = "";
                     uList = false;
                 }
             }
@@ -148,7 +148,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                         uList = false;
                         currentPartDesc += "</ul>";
                     }
-                    currentPartDesc += "<p>" + line + "</p>";
+                    currentPartDesc += "" + line + "<br>";
                 }
 
                 // For <ul> continuing to next part of the page, Every 'part name' has
