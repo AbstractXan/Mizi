@@ -9,7 +9,10 @@ using namespace std;
 
 TemplateManager::TemplateManager(std::string templateFile)
 {
+
     this->tmap = new TemplateMap;
+    if (templateFile == "")
+        return;
     this->templateCreatorParser(templateFile);
 }
 /**
@@ -73,13 +76,6 @@ void TemplateManager::templateCreatorParser(std::string templatefile)
     }
     else
     {
-        // if (!configFile.is_open()){
-        //     // Create default config.conf when not present
-        //     fstream configFileWrite("config.conf", std::ios_base::app);
-        // configFileWrite.write(defaultConfig.data(), defaultConfig.size());
-        // configFileWrite.close();
-
-        // configFile.open("config.conf");
         cout << "[!] Provided template file not found in given path [!]" << endl;
     }
 }

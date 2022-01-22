@@ -243,7 +243,10 @@ void checkProjectFileStructure(Config *conf)
 {
     checkAndCreateDirectory(conf->site);
     checkFile(conf->css, defaultCSS);
-    checkFile(conf->templatefile, defaultTemplate);
+    if (conf->templatefile != "")
+    {
+        checkFile(conf->templatefile, defaultTemplate);
+    }
 }
 
 void checkFile(std::string path, std::string defaultData)
