@@ -2,26 +2,29 @@
 <header><a id='logo' href='home.html'><img src='../media/interface/logo.png' alt='logo' ></a></header><main class='page'>
 <h1>Templates</h1>
 <ul class='jump'>
-<li><a href='#singlelinenoarg'>SingleLineNoArg</a></li>
-<li><a href='#singlelineonearg'>SingleLineOneArg</a></li>
-<li><a href='#singlelinemultiplearg'>SingleLineMultipleArg</a></li>
-<li><a href='#multilinenoarg'>MultiLineNoArg</a></li>
-<li><a href='#multilineonearg'>MultiLineOneArg</a></li>
-<li><a href='#multilinemultplearg'>MultiLineMultpleArg</a></li>
+<li><a href='#intro'>Intro</a></li>
+<li><a href='#single_line_no_argument'>Single Line No Argument</a></li>
+<li><a href='#single_line_one_arg'>Single Line One Arg</a></li>
+<li><a href='#single_line_multiple_arg'>Single Line Multiple Arg</a></li>
+<li><a href='#multi_line_no_arg'>Multi Line No Arg</a></li>
+<li><a href='#multi_line_one_arg'>Multi Line One Arg</a></li>
+<li><a href='#multi_line_multple_arg'>Multi Line Multple Arg</a></li>
 <li><a href='#bad_syntax_examples'>Bad Syntax Examples</a></li>
 </ul>
-</ul><h2 id='singlelinenoarg'>SingleLineNoArg</h2>
-This is a template with no arg!<br>
-</ul><h2 id='singlelineonearg'>SingleLineOneArg</h2>
-{{variable = asdfasf}}<br>This is a template with arg=variable<br>This is a template with arg=value2<br>
-</ul><h2 id='singlelinemultiplearg'>SingleLineMultipleArg</h2>
-First arg=value1 | Second arg=value2<br>
-</ul><h2 id='multilinenoarg'>MultiLineNoArg</h2>
-LINE ONE<br>This is a template with no arg!<br>LINE TWO<br>
-</ul><h2 id='multilineonearg'>MultiLineOneArg</h2>
-LINE ONE<br>This is a template with one arg = value1<br>LINE TWO<br>
-</ul><h2 id='multilinemultplearg'>MultiLineMultpleArg</h2>
-LINE ONE : var1=value1<br>LINE TWO : var2=value2<br>
+</ul><h2 id='intro'>Intro</h2>
+Templates are defined in <a href='https://raw.githubusercontent.com/AbstractXan/Mizi/master/src/template.conf'>template.conf</a> file and used in <a href='https://raw.githubusercontent.com/AbstractXan/Mizi/master/src/website.md'>website.md</a><br>
+</ul><h2 id='single_line_no_argument'>Single Line No Argument</h2>
+Output of template with no arg!<br>
+</ul><h2 id='single_line_one_arg'>Single Line One Arg</h2>
+{{variable = asdfasf}}<br>Output of template with one arg=variable<br>Output of template with one arg=value2<br>
+</ul><h2 id='single_line_multiple_arg'>Single Line Multiple Arg</h2>
+Output of single line multi templateFirst arg=value1 | Second arg=value2<br>
+</ul><h2 id='multi_line_no_arg'>Multi Line No Arg</h2>
+LINE ONE<br>Output of multiline template with no arg!<br>LINE TWO <br>
+</ul><h2 id='multi_line_one_arg'>Multi Line One Arg</h2>
+LINE ONE<br>Output of multiline template with one arg=value1<br>LINE TWO<br>
+</ul><h2 id='multi_line_multple_arg'>Multi Line Multple Arg</h2>
+Output of multiline multi argument template:<br>LINE ONE : var1=value1<br>LINE TWO : var2=value2<br>
 </ul><h2 id='bad_syntax_examples'>Bad Syntax Examples</h2>
 <ul><li>{{NonexistentTemplate}}</li><li>{{SingleLineTemplateNoArg} <- Wrong Syntax</li>
 <hr/></main><footer><p><p>Website generated using <u><a href='https://github.com/abstractxan/Mizi'>abstractxan/Mizi</a><u></p></p></footer>

@@ -14,12 +14,10 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 
 ## Download and run
 - Clone / Download this repository
-- Move into `src` by doind `cd src`
 - Update `src/config.conf` for your webpages
 - Update `src/website.md`
-- Build using `./build.sh` or Run `./mizi` to create site
-- Go up a directory `cd ..`
-- Open `index.html` which essentially opens `site/home.html`
+- Build using `./build.sh` or Run `./src/mizi` to create site
+- Open `index.html` which opens `site/home.html`
 
 ![](./media/mizi.png)
 ## Currently supported features:
@@ -44,15 +42,12 @@ $$$ Seperate Pages
 ## Seperate Page
 ### Section
 Text
+
+{{Template Arg1 Arg2}}
 ```
 
-- A config file for `<head>` , header and footer
-
-## Todo
-
-``` md
-
-```
+- A `config.conf` file for `<head>` , header and footer
+- Templating feature through `template.conf`
 
 ## Contribute
 Open a new issue for bug / feature requests. PRs are welcome.

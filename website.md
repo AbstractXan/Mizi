@@ -13,7 +13,7 @@ This is a separate page
 ###  
 This is separate page2
 
-# Testing
+# Features
 ## HTML
 ### Html &lt; p &gt; tag
 <p>This is a paragraph</p>
@@ -59,7 +59,7 @@ Text [link](https://abstractxan.xyz) text [link](https://abstractxan.xyz) text
 ### Single
 ![image](../media/interface/favicon.ico)
 ### Inline
-Text! ![image](../media/interface/favicon.ico) !Text
+Text ![image](../media/interface/favicon.ico) Text
 ### Multiple
 ![image](../media/interface/favicon.ico) ![image](../media/interface/favicon.ico)
 ### Errors
@@ -67,25 +67,34 @@ Text! ![image](../media/interface/favicon.ico) !Text
 ![brokenImageLink]
 
 ## SeparatePages
-###  
+### 
+Separate pages are not shown on home page
 - [Separate page](separate.html)
 - [Separate page2](separate2.html)
 
 
 ## Templates
-### SingleLineNoArg
+### Intro
+Templates are defined in [template.conf](https://raw.githubusercontent.com/AbstractXan/Mizi/master/src/template.conf) file and used in [website.md](https://raw.githubusercontent.com/AbstractXan/Mizi/master/src/website.md)
+
+### Single Line No Argument
 {{SingleLineTemplateNoArg}}
-### SingleLineOneArg
+
+### Single Line One Arg
 {{variable = asdfasf}}
 {{SingleLineTemplateOneArg var=variable }}
 {{SingleLineTemplateOneArg var=value2}}
-### SingleLineMultipleArg
+
+### Single Line Multiple Arg
 {{SingleLineTemplateMultipleArg var1=value1 var2=value2}}
-### MultiLineNoArg
+
+### Multi Line No Arg
 {{MultiLineTemplateNoArg}}
-### MultiLineOneArg
+
+### Multi Line One Arg
 {{MultiLineTemplateOneArg var=value1}}
-### MultiLineMultpleArg
+
+### Multi Line Multple Arg
 {{MultiLineTemplateMultipleArg var1=value1 var2=value2}}
 
 ### Bad Syntax Examples

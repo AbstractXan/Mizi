@@ -15,11 +15,21 @@ body header a#logo { margin-top: -15px;display: block;width: 75px; margin-bottom
 body header a#logo img { width:100%; }
 body main img.capsule { width: 150px; }
 body main img.medium {max-width: 300px;}
-body main > * { max-width: 600px; margin-bottom: 30px }
-body main > h1 { font-family: "alte_haas_grotesk_regular", "Helvetica Neue", Helvetica, Arial; font-size:45px; text-transform: capitalize; padding-bottom:30px; }
-body main > h2 { font-family: "alte_haas_grotesk_bold", "Helvetica Neue", Helvetica, Arial; font-size:30px; text-transform: capitalize; }
-body main > img { width:100%; max-width: 600px }
-body main > ul { font-family: 'input_mono_regular'; font-size:12px; line-height: 20px }
+body main > * { max-width: 600px; margin-bottom: 15px }
+body main > h1 { 
+  font-family: "alte_haas_grotesk_regular", "Helvetica Neue", Helvetica, Arial; 
+  font-size:45px; 
+  text-transform: capitalize; 
+}
+body main > h2 { 
+  font-family: "alte_haas_grotesk_bold", 
+  "Helvetica Neue", Helvetica, Arial; 
+  font-size:30px; 
+  text-transform: capitalize;
+  margin-top: 45px; 
+}
+body main > img { max-width: 600px }
+body main > ul { font-family: 'input_mono_regular'; font-size:14px; line-height: 20px }
 body main > ul li {}
 body main > ul li a { text-transform: capitalize; text-decoration: underline; }
 body main > ul li b { font-weight: bold }
@@ -50,10 +60,10 @@ body footer { border-top: 1.5px solid black;padding-top: 30px;margin-bottom: 120
 body footer p { font-weight: bold }
 body footer p a { text-decoration: underline; }
 
-div.sketchbook {height: 100%;}
-div.sketchbook img{ max-width: calc(100% - 20px); border-radius: 3px;margin: 10px; display: block; float: left; border-style: solid; border-radius: 3px; border-width: 3px;}
 img.thumbnail { border-radius: 3px;max-width: calc(100% - 20px);margin-bottom: 10px;}
+
 b { font-weight: bold }
+a { text-decoration: underline; }
 .row:after {
   content: "";
   display: table;
