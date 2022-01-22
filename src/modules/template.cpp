@@ -237,8 +237,8 @@ std::string renderTemplate(Template *template_ptr, std::unordered_map<std::strin
     for (size_t index = 0; index < template_ptr->textContentList.size(); index++)
     {
 
-        printVector(template_ptr->textContentList);
-        printVector(template_ptr->argContentList);
+        //Debug: printVector(template_ptr->textContentList);
+        //Debug: printVector(template_ptr->argContentList);
 
         ret += template_ptr->textContentList[index];
 

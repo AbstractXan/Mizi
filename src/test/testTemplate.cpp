@@ -94,7 +94,7 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
             "Content with One Arg",
             "Hello $$world$$",
             vector<string>({"Hello ", ""}),
-            vector<string>({"world",""})),
+            vector<string>({"world", ""})),
 
         make_tuple(
             "Content with Two Args",
@@ -112,19 +112,19 @@ vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTe
             "Content with no text and one arg",
             "$$arg$$",
             vector<string>({"", ""}),
-            vector<string>({"arg",""})),
+            vector<string>({"arg", ""})),
 
         make_tuple(
             "Content with no text and two arg",
             "$$arg$$$$arg2$$",
             vector<string>({"", "", ""}),
-            vector<string>({"arg", "arg2",""})),
+            vector<string>({"arg", "arg2", ""})),
 
         make_tuple(
             "Content with arg between text",
             "text $$arg$$ text",
             vector<string>({"text ", " text"}),
-            vector<string>({"arg",""})),
+            vector<string>({"arg", ""})),
     };
 
     vector<tuple<string, string, vector<string>, vector<string>>> errorPathTestParams = {
@@ -197,19 +197,20 @@ void testParseAndSaveTemplateContent()
     cout << "    " << passed << "/" << tests.size() << " TESTS PASSED " << endl;
 }
 
-vector<tuple<string, string, string>> testTemplateManagerProvider(){
+vector<tuple<string, string, string>> testTemplateManagerProvider()
+{
     return {
         make_tuple(
-            "Template no args{{Card}}", 
-            "Card", 
+            "Template no args{{Card}}",
+            "Card",
             "title : desc"),
         make_tuple(
-            "Template w/ argument", 
-            "Card title=Title", 
+            "Template w/ argument",
+            "Card title=Title",
             "Title : desc"),
         make_tuple(
-            "Template w/ two arguments", 
-            "Card title=TITLE desc=DESC", 
+            "Template w/ two arguments",
+            "Card title=TITLE desc=DESC",
             "TITLE : DESC"),
     };
 }
@@ -219,7 +220,7 @@ vector<tuple<string, string, string>> testTemplateManagerProvider(){
 void testTemplateManager()
 {
     cout << TEMPLATE_DOMAIN << "templateManager" << endl;
-    TemplateManager TMgr("test/testFiles/testTemplates.txt");
+    TemplateManager TMgr("test/testFiles/testTemplates.conf");
 
     auto tests = testTemplateManagerProvider();
 
@@ -253,8 +254,7 @@ void testTemplateManager()
 void testTemplate()
 {
 
-    // Test Re
     testTemplateManager();
-    testParseAndSaveTemplateContent();    
+    testParseAndSaveTemplateContent();
     testGenerateTemplateArgValueMap();
 }

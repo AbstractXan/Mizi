@@ -264,7 +264,7 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
     };
 
     // TEMPLATES
-    TemplateManager tmpMgr("test/testFiles/testTemplates.txt");
+    TemplateManager tmpMgr("test/testFiles/testTemplates.conf");
     vector<tuple<string, string, string, TemplateManager *, string>> templateTests = {
         make_tuple(
             "Correct template -- no args",
@@ -314,7 +314,6 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
             path,
             &tmpMgr,
             "### Title : Desc"),
-
 
     };
 

@@ -1,1 +1,1 @@
-Donot Change Values In `testTemplate.md` as it is required for testing.
+Donot Change Values In `testTemplate.conf` as it is required for testing.
