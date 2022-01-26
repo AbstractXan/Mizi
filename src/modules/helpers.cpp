@@ -12,7 +12,6 @@ char getLower(char c)
     return c;
 }
 
-
 string toLowerCase(string text)
 {
     string newtext = "";
@@ -98,10 +97,9 @@ string parseLinks(string text, string path, TemplateManager *templateMgr)
                 index += 1;
             }
 
-            //if bad template
             if (templateParseSuccessful)
             {
-                newText += templateMgr->templateReaderParser(templateString);
+                newText += templateMgr->renderTemplateFromText(templateString);
                 index += 2;
             }
             else
@@ -246,14 +244,10 @@ string parseLinks(string text, string path, TemplateManager *templateMgr)
 void checkProjectFileStructure(Config *conf)
 {
     if (conf->css != "")
-    {
-        createFileIfDNE(conf->css);
-    }
+        createFileIfDNE(conf->css, "");
 
     if (conf->templatefile != "")
-    {
-        createFileIfDNE(conf->templatefile);
-    }
+        createFileIfDNE(conf->templatefile, "");
 }
 
 /**
@@ -261,15 +255,16 @@ void checkProjectFileStructure(Config *conf)
  * @param path Path to the file
  * @param defaultData (optional) Default data used to create new file
  */
-void createFileIfDNE(std::string path, std::string defaultData="")
+void createFileIfDNE(std::string path, std::string defaultData = "")
 {
     std::ifstream file(path.data());
 
     if (!file.is_open())
     {
-        // Create default config.conf when not present
+        cout << endl << "File '" + path + "' not found. Generating...";
         std::fstream fileWrite(path.data(), std::ios_base::app);
         fileWrite.write(defaultData.data(), defaultData.size());
         fileWrite.close();
+        cout << "DONE" << endl;
     }
 }

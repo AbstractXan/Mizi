@@ -119,12 +119,6 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
             }
             else
             { // No headings: Plaintext
-                // Error
-                // if (currentPartName == "" || currentPage->title.empty())
-                // {
-                //     printError(lineNo, "No Part assigned!");
-                //     return NULL;
-                // }
 
                 // Ul
                 if (line[i] == '-')
@@ -152,7 +146,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                 }
 
                 // For <ul> continuing to next part of the page, Every 'part name' has
-                // an extra </ul> to keep a check. Refer to build page function
+                // an extra </ul> to keep a check. Refer to buildpage function
 
                 // Update if page exists, add to current part i.e. (partsCount - 1)
                 if (currentPage->title != "")

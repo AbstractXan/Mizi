@@ -24,7 +24,7 @@ private:
 public:
   TemplateManager(std::string templateFile);
   // Read string from md like: {{template}}
-  std::string templateReaderParser(std::string mdTemplateFormat);
+  std::string renderTemplateFromText(std::string mdTemplateFormat);
   Template *getTemplate(std::string templateName);
 };
 

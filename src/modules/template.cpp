@@ -82,22 +82,17 @@ void TemplateManager::provisionTemplates(std::string templatefile)
     }
 }
 
-// Input {{template arg1=value1 arg2=value2}}
-// template arg1 value1 arg2 value2
-std::string TemplateManager::templateReaderParser(std::string templateText)
+/**
+ * @brief Try to render template from given string
+ * 
+ * @param templateText String of format "template arg1=value1 arg2=value2"
+ * @return String generated from template. If template, not found
+ */
+std::string TemplateManager::renderTemplateFromText(std::string templateText)
 {
-
-    // Get template name and args
     vector<string> tokens = tokenizer(templateText, "= ");
-    //cout << "tokens: " << printVector(tokens) << endl;
     std::string templateName = tokens[0];
-
-    //TODO: verify template name
-    //TODO: verify arg names and numbers
-    //if (!VerifyTemplateHeaders(tokens))
-    // return "";
     auto argValMapPtr = generateTemplateArgValueMap(tokens);
-    // Use this map to replace args;
     auto templatePtr = this->getTemplate(templateName);
     if (templatePtr)
     {
@@ -135,10 +130,10 @@ std::unordered_map<std::string, std::string> *generateTemplateArgValueMap(std::v
     }
     return argValMap;
 }
+
 /**
  * Parses a line inside template body in template.txt
  * Saves parsed text and args into the template
- * 
  * @param template_ptr 
  * @param TemplateText
  * @param isMultiLine True when given line isn't the first line in template
@@ -154,23 +149,6 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bo
 
     size_t i = 0, lineSize = content.size();
 
-    // For content "<p> text <p>"
-    // text = [ "<p> text <p>" ]
-    // arg = [ "" ]
-
-    // For content "<p> $$var$$ <p>"
-    // text = [ "<p> " , " <p>" ]
-    // arg = [ "var" , ""]
-
-    // For content "$$var$$ boop!"
-    // text = [ "" , " boop!" ]
-    // arg = [ "var" , ""]
-
-    // variables are case sensitive
-    // no spacing allowed when using variables:
-    // $$ var $$ will just give you $$ var $$ as output
-
-    // Every text should have an arg attached to it
     std::string text = "";
     std::string arg = "";
     while (i < lineSize)
@@ -201,11 +179,8 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bo
             if (argParseSuccessful && arg != "")
             {
                 // Push text then arg content
-                //cout << "SAVING TEXT: '" << text << "'" << endl;
                 template_ptr->textContentList.push_back(text);
                 text = "";
-
-                // cout << "SAVING ARG: '" << arg << "'" << endl;
                 template_ptr->argContentList.push_back(arg);
                 arg = "";
                 i += 2;
@@ -229,7 +204,11 @@ void parseAndSaveTemplateContent(Template *template_ptr, std::string content, bo
 }
 
 /**
- * renderTemplate with given argument values
+ * @brief Render a template with given arguments and their values
+ * 
+ * @param template_ptr Pointer to template
+ * @param argValMap Map of arguments and values from text
+ * @return std::string 
  */
 std::string renderTemplate(Template *template_ptr, std::unordered_map<std::string, std::string> *argValMap)
 {
@@ -262,7 +241,6 @@ std::string renderTemplate(Template *template_ptr, std::unordered_map<std::strin
         }
     }
 
-    // Delete ArgMap;
     argValMap->clear();
     return ret;
 }

@@ -12,7 +12,7 @@ using namespace std;
 string TEMPLATE_DOMAIN = "template/";
 
 /** 
- * Data provider for testToLowerCase
+ * @brief Data provider for testGenerateTemplateArgValueMap
  */
 vector<pair<string, vector<string>>> testGenerateTemplateArgValueMapProvider()
 {
@@ -23,8 +23,10 @@ vector<pair<string, vector<string>>> testGenerateTemplateArgValueMapProvider()
         make_pair("no arg no val", temp2),
     };
 }
+
 /**
- * testToLowerCase
+ * @brief 
+ * 
  */
 void testGenerateTemplateArgValueMap()
 {
@@ -75,15 +77,38 @@ void testGenerateTemplateArgValueMap()
 }
 
 /** 
- * Data provider for testParseAndSaveTemplateContent
+ 
+ * 
+ * @brief Data provider for testParseAndSaveTemplateContent
  * @return [TestName, ContentLine, ExpectedText, ExpectedArgs]
+ * 
  */
 vector<tuple<string, string, vector<string>, vector<string>>> testParseAndSaveTemplateContentProvider()
 {
+    /** Example 1 : Text only
+     * "<p> text <p>" should be saved as
+     * text = [ "<p> text <p>" ],
+     * arg = [ "" ]
+     * 
+     * Example 2 : Inline arg
+     * "<p> $$var$$ <p>" should be saved as
+     * text = [ "<p> " , " <p>" ]
+     * arg = [ "var" , ""]
+     * 
+     * Example 1 : Starting with arg
+     * "$$var$$ boop!" should be saved as
+     * text = [ "" , " boop!" ]
+     * arg = [ "var" , ""]
+     * 
+     * Variables are case sensitive
+     * No spacing allowed when using variables:
+     * $$ var $$ will just give you $$ var $$ as output
+     * 
+     * Every text should have an arg attached to it
+     */
     vector<tuple<string, string, vector<string>, vector<string>>> testParams;
     vector<tuple<string, string, vector<string>, vector<string>>> happyPathTestParams = {
-        // Every text has argstring attached to it.
-        // Renders like TextString then ArgString
+        // Text and args are rendered alternatively
         make_tuple(
             "Content with No Arg",
             "Hello World",
@@ -214,6 +239,7 @@ vector<tuple<string, string, string>> testTemplateManagerProvider()
             "TITLE : DESC"),
     };
 }
+
 /**
  * Tests TemplateManager
  */
@@ -232,7 +258,7 @@ void testTemplateManager()
         string input = get<1>(test);
         string expected = get<2>(test);
 
-        string actual = TMgr.templateReaderParser(input);
+        string actual = TMgr.renderTemplateFromText(input);
 
         if (expected == actual)
         {
@@ -253,7 +279,6 @@ void testTemplateManager()
 
 void testTemplate()
 {
-
     testTemplateManager();
     testParseAndSaveTemplateContent();
     testGenerateTemplateArgValueMap();

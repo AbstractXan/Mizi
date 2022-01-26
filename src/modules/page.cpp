@@ -43,6 +43,8 @@ void buildPage(Config *conf, Page *page, string path)
       htmlPage << "<li><a href='#" << part_index << "'>" << part_name
                << "</a></li>\n";
     }
+
+    // Fix for <ul> overflow from createCategories()
     htmlPage << "</ul>\n";
   }
 
