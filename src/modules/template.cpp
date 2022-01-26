@@ -13,12 +13,14 @@ TemplateManager::TemplateManager(std::string templateFile)
     this->tmap = new TemplateMap;
     if (templateFile == "")
         return;
-    this->templateCreatorParser(templateFile);
+    this->provisionTemplates(templateFile);
 }
 /**
- * Parses templatefile and stores in tmap
+ * Parses templatefile and stores templates in templatemap
+ * @param templateFile path of templatefile
+ * @return void
  */
-void TemplateManager::templateCreatorParser(std::string templatefile)
+void TemplateManager::provisionTemplates(std::string templatefile)
 {
     Template *currTemplate = nullptr;
     bool isParsingTemplate = false;

@@ -16,7 +16,7 @@ Config *configParser()
   if (!configFile.is_open())
   {
     // Create default config.conf when not present
-    checkFile("config.conf", defaultConfig);
+    createFileIfDNE("config.conf", defaultConfig);
     // Check file existence
     configFile.open("config.conf");
   }

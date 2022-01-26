@@ -19,7 +19,7 @@ class TemplateManager
 {
 private:
   TemplateMap *tmap;
-  void templateCreatorParser(std::string templateFile);
+  void provisionTemplates(std::string templateFile);
 
 public:
   TemplateManager(std::string templateFile);

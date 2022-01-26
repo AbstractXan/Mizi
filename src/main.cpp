@@ -17,8 +17,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    // Check if "../site/" exists, else create one
-
     createSite("website.md", "site/");
     return 0;
 }

@@ -11,6 +11,8 @@ char getLower(char c)
         return c - ('Z' - 'z');
     return c;
 }
+
+
 string toLowerCase(string text)
 {
     string newtext = "";
@@ -23,7 +25,7 @@ string toLowerCase(string text)
         else if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) //alphabets
             newtext += getLower(text[i]);
         else if (text[i] >= '0' && text[i] <= '9')
-            newtext += getLower(text[i]);
+            newtext += text[i];
     }
     return newtext;
 }
@@ -236,20 +238,30 @@ string parseLinks(string text, string path, TemplateManager *templateMgr)
     return newText;
 }
 
-std::string defaultCSS("");
-std::string defaultTemplate("");
-
+/**
+ * @brief Check CSS and Template file exist
+ * @param *Config Pointer to config
+ * @return void
+ */
 void checkProjectFileStructure(Config *conf)
 {
-    checkAndCreateDirectory(conf->site);
-    checkFile(conf->css, defaultCSS);
+    if (conf->css != "")
+    {
+        createFileIfDNE(conf->css);
+    }
+
     if (conf->templatefile != "")
     {
-        checkFile(conf->templatefile, defaultTemplate);
+        createFileIfDNE(conf->templatefile);
     }
 }
 
-void checkFile(std::string path, std::string defaultData)
+/**
+ * @brief Create a File If DNE 
+ * @param path Path to the file
+ * @param defaultData (optional) Default data used to create new file
+ */
+void createFileIfDNE(std::string path, std::string defaultData="")
 {
     std::ifstream file(path.data());
 
@@ -259,15 +271,5 @@ void checkFile(std::string path, std::string defaultData)
         std::fstream fileWrite(path.data(), std::ios_base::app);
         fileWrite.write(defaultData.data(), defaultData.size());
         fileWrite.close();
-    }
-}
-
-void checkAndCreateDirectory(std::string path)
-{
-    std::filesystem::path dir_path{path};
-    if (!std::filesystem::exists(dir_path))
-    {
-        cout << "[Config] Creating directory path: " << path << endl;
-        std::filesystem::create_directory(dir_path);
     }
 }
