@@ -14,22 +14,23 @@ Sample generated repo here : [mizi.netlify.com](https://mizi.netlify.com)
 
 ## Download and run
 - Clone / Download this repository
-- Move into `src` by doind `cd src`
-- Update `src/config.txt`
+- Update `src/config.conf` for your webpages
 - Update `src/website.md`
-- Build using `./build.sh` or Run `./mizi` to create site
-- Go up a directory `cd ..`
-- Open `index.html` which essentially opens `site/home.html`
+- Build using `./build.sh` or Run `./src/mizi` to create site
+- Open `index.html` which opens `site/home.html`
 
 ![](./media/mizi.png)
-## Currently supported format
+## Currently supported features:
 
-- A config file for `<head>` , header and footer
+1. Inputs a single markdown file as input
+2. Configurable `<head>` and header and footer for every page
+3. Create reusable components using templates by updating `templates.conf`
+
 
 ``` md
 # Category
 ## Page
-### Part
+### Section
 - First
 - Second
 - Third
@@ -39,18 +40,14 @@ Inline images ![images](./media/interface/favicon.ico)
 
 $$$ Seperate Pages
 ## Seperate Page
-### Part
+### Section
 Text
+
+{{Template Arg1 Arg2}}
 ```
 
-## Todo
-
-``` md
-- add template engine
-- setup better unit testing functionality
-- fix url and image parsing code by split string
-- adding classes to images
-```
+- A `config.conf` file for `<head>` , header and footer
+- Templating feature through `template.conf`
 
 ## Contribute
 Open a new issue for bug / feature requests. PRs are welcome.

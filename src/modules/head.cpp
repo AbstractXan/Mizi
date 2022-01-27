@@ -1,10 +1,11 @@
 #include "../include/config.hpp"
-#include<string>
+#include <string>
 #include "../include/head.hpp"
 
 using namespace std;
 
-string html_head(Config* conf, string text) {
+string html_head(Config *conf, string text)
+{
   return "<!DOCTYPE html><html lang='en'><head><link rel='shortcut icon' "
          "href='" +
          conf->shortcut_icon + "' type='image/x-icon'><link rel='icon' href='" +
@@ -23,6 +24,7 @@ string html_head(Config* conf, string text) {
          "'><meta property='og:site_name' content='" + conf->name +
          "'><title> " + conf->name + " - " + text +
          "</title><link rel='stylesheet' type='text/css' "
-         "href='../links/main.css'></head><body class='" +
-         text + "'>";
+         "href='" +
+         conf->css + "'>" + conf->head + "</head><body class='" +
+         text + "'>\n";
 }

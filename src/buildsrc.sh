@@ -4,8 +4,11 @@ rm ../site/*.html
 rm mizi
 make
 
+
 # Test
 ./mizi -t
 
+cd ../
+
 # Build
-./mizi
+./src/mizi

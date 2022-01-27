@@ -1,6 +1,6 @@
 #pragma once
 
-#include<string>
+#include <string>
 
 struct Config
 {
@@ -11,6 +11,10 @@ struct Config
   std::string twitter_creator;
   std::string header;
   std::string footer;
+  std::string templatefile; // deafult: "template.conf"
+  std::string css; // default: "../style.css" relative to html files
+  std::string site; // default: "site/" relative to mizi
+  std::string head; // used for adding scripts to <head>
 };
 
-Config * configParser();
+Config *configParser();

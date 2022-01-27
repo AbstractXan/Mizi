@@ -28,6 +28,4 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Run build
-        run: |
-          cd src
-          ./build.sh
+        run: ./build.sh

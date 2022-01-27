@@ -17,7 +17,7 @@ Category *createCategory(Category *Categories[16], string name, int count)
     return newCategory;
 }
 
-Category **createCategories(Category *Categories[16], int *categoryCount, string filename, string path)
+Category **createCategories(Category *Categories[16], int *categoryCount, string filename, string path, TemplateManager *TemplateMgr)
 {
 
     string line;
@@ -42,13 +42,14 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
             int hashcount = 0;
             int i = 0;
 
-            if (line == " ")
+            if (line == "")
             {
                 currentPartDesc += "<br>";
                 continue;
             }
 
-            line = parseLinks(line, path);
+            // All the magic happens here
+            line = parseLinks(line, path, TemplateMgr);
 
             // Removing unwanted spaces
             while (line[i] == ' ')
@@ -56,7 +57,7 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                 i++;
             }
 
-            if (line[i] == '$' && line[i + 1] == '$' && line[i + 2] == '$')
+            if (line.substr(i, 5) == "# $$$")
             {
                 // Separate page
                 currentCategory = separateCategory;
@@ -112,18 +113,12 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                     // Current Part Name
                     currentPartName = line.substr(i + 1, line.size() - i);
                     addPart(currentPage, currentPartName);
-                    currentPartDesc = "<p>";
+                    currentPartDesc = "";
                     uList = false;
                 }
             }
             else
             { // No headings: Plaintext
-                // Error
-                if (currentPartName == "" || currentPage->title.empty())
-                {
-                    printError(lineNo, "No Part assigned!");
-                    return NULL;
-                }
 
                 // Ul
                 if (line[i] == '-')
@@ -147,16 +142,15 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
                         uList = false;
                         currentPartDesc += "</ul>";
                     }
-                    currentPartDesc += "<p>" + line + "</p>";
+                    currentPartDesc += "" + line + "<br>";
                 }
 
                 // For <ul> continuing to next part of the page, Every 'part name' has
-                // an extra </ul> to keep a check. Refer to build page function
+                // an extra </ul> to keep a check. Refer to buildpage function
 
                 // Update if page exists, add to current part i.e. (partsCount - 1)
                 if (currentPage->title != "")
-                    currentPage->partDesc[(currentPage->partsCount) - 1] =
-                        currentPartDesc;
+                    currentPage->partDesc[(currentPage->partsCount) - 1] = currentPartDesc;
             }
         }
         mdFile.close();
@@ -175,19 +169,23 @@ void addPage(Category *category, Page *page)
 }
 
 // Debug
-void printContent(Category *cats[], int count) {
-  for (int i = 0; i <= count; i++) {
-    Category tempCat = *cats[i];
-    cout << tempCat.name << endl;
+void printContent(Category *cats[], int count)
+{
+    for (int i = 0; i <= count; i++)
+    {
+        Category tempCat = *cats[i];
+        cout << tempCat.name << endl;
 
-    for (int pageno = 0; pageno < tempCat.pageCount; pageno++) {
-      Page tempPage = *tempCat.pages[pageno];
-      cout << "\t" << tempPage.title << endl;
+        for (int pageno = 0; pageno < tempCat.pageCount; pageno++)
+        {
+            Page tempPage = *tempCat.pages[pageno];
+            cout << "\t" << tempPage.title << endl;
 
-      for (int partno = 0; partno < tempPage.partsCount; partno++) {
-        cout << "\t\t |" << tempPage.partName[partno] << endl;
-        cout << "\t\t |" << tempPage.partDesc[partno] << endl;
-      }
+            for (int partno = 0; partno < tempPage.partsCount; partno++)
+            {
+                cout << "\t\t |" << tempPage.partName[partno] << endl;
+                cout << "\t\t |" << tempPage.partDesc[partno] << endl;
+            }
+        }
     }
-  }
 }

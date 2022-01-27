@@ -1,9 +1,10 @@
-#include"testHelpers.cpp"
+#include "testHelpers.cpp"
+#include "testTemplate.cpp"
 using namespace std;
 
-void runTests(){
-
-    //Helper functions
-    testToLowerCase();
-    testParseLinks();
+void runTests()
+{
+    //TODO: test config creator and parser
+    testTemplate();
+    testHelpers();
 }

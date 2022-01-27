@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "../include/helpers.hpp"
+#include "../include/template.hpp"
+
 using namespace std;
 char getLower(char c)
 {
@@ -9,6 +11,7 @@ char getLower(char c)
         return c - ('Z' - 'z');
     return c;
 }
+
 string toLowerCase(string text)
 {
     string newtext = "";
@@ -21,77 +24,97 @@ string toLowerCase(string text)
         else if ((text[i] >= 'A' && text[i] <= 'Z') || (text[i] >= 'a' && text[i] <= 'z')) //alphabets
             newtext += getLower(text[i]);
         else if (text[i] >= '0' && text[i] <= '9')
-            newtext += getLower(text[i]);
+            newtext += text[i];
     }
     return newtext;
 }
 // Prints errorline
-void printError(int linenumber, string text) {
-  cout << "Error at line " << linenumber << ". " << text << endl;
+void printError(int linenumber, string text)
+{
+    cout << "Error at line " << linenumber << ". " << text << endl;
 }
 
-// {{tags}} -> <a class='tag' href='tags.html'> {{tags}}</a>
+/** 
+ * Tokenizes string based on delims
+ * @param stringPtr
+ * @param delims Default value = " "
+ */
+vector<string> tokenizer(const std::string stringPtr, const std::string &delims = " ")
+{
+
+    vector<string> tokens;
+    std::size_t nextIndex, currIndex = 0;
+    // Find next instance of delim
+    nextIndex = stringPtr.find_first_of(delims);
+    // While delims exist
+    while (nextIndex != std::string::npos)
+    {
+        // Add token
+        tokens.push_back(stringPtr.substr(currIndex, nextIndex - currIndex));
+        currIndex = nextIndex + 1;
+        nextIndex = stringPtr.find_first_of(delims, currIndex);
+    }
+    // Push last string chunk
+    if (currIndex < stringPtr.size())
+    {
+        tokens.push_back(stringPtr.substr(currIndex, stringPtr.size() - currIndex));
+    }
+
+    return tokens;
+}
+
 //  [urlText](url) ->  <a href='url'>urlText</a>
 // ![altText](image) -> <img src='' alt=''>
-string parseLinks(string text, string path)
+// {{templateName param1=value1 param2=value2}}
+string parseLinks(string text, string path, TemplateManager *templateMgr)
 {
     path = "";
     string label = text;
-    unsigned int index = 0;
+    size_t index = 0;
     string newText = "";
     string urlText = "";
     string url = "";
     bool isImage = false;
-    bool isTag = false;
 
     for (; index < text.size();)
     {
 
-        // Check if tag
-        if (text[index] == '{' && text[index + 1] == '{' && !isTag)
+        // Check if template
+        if (text[index] == '{' && index + 1 < text.size() && text[index + 1] == '{')
         {
-            isTag = true;
             index += 2;
-            continue;
-        }
-        
-        // If tag
-        if (isTag == true)
-        {
-            string tag = "";
+
+            string templateString = "";
+            bool templateParseSuccessful = false;
             while (index < text.size())
             {
-                if(text[index] == '}' && text[index+1] == '}'){
-                    string filename = toLowerCase(tag);
-                    string filepath = filename + ".html";
-                    newText += "<a class='tag' href='" + filepath + "'>{{" + tag + "}}</a>";
-                    isTag = false;
+                if (text[index] == '}' && text[index + 1] == '}')
+                {
+                    templateParseSuccessful = true;
                     break;
                 }
-                tag += text[index];
+                templateString += text[index];
                 index += 1;
             }
 
-            //if bad tags
-            if(index == text.size() && isTag == true){
-                newText += "{{" + tag;
-                isTag = false;
+            if (templateParseSuccessful)
+            {
+                newText += templateMgr->renderTemplateFromText(templateString);
+                index += 2;
             }
-
-            index += 2; // Increment index to new text;
-            continue;
+            else
+            {
+                newText += "{{" + templateString;
+            }
         }
-
-
 
         // Enter into linking
         // ![ -> image flag true
-        if (text[index] == '!' && text[index + 1] == '[')
+        else if (text[index] == '!' && text[index + 1] == '[')
         {
             isImage = true;
             index++;
             continue;
-
         }
         else if (text[index] == '[')
         {
@@ -138,7 +161,8 @@ string parseLinks(string text, string path)
                         // Error [link](abc.com [link](abc.com)
                         if (text[index] == '[')
                         {
-                            if (isImage){
+                            if (isImage)
+                            {
                                 newText += '!';
                             }
 
@@ -172,8 +196,9 @@ string parseLinks(string text, string path)
 
                     if (index == text.size())
                     {
-                        if (isImage){
-                                newText += '!';
+                        if (isImage)
+                        {
+                            newText += '!';
                         }
 
                         newText += '[' + urlText + "](" + url;
@@ -182,7 +207,8 @@ string parseLinks(string text, string path)
                 }
                 else
                 {
-                    if (isImage){
+                    if (isImage)
+                    {
                         newText += '!';
                     }
                     newText += '[' + urlText + ']';
@@ -192,7 +218,8 @@ string parseLinks(string text, string path)
             }
             else
             {
-                if (isImage){
+                if (isImage)
+                {
                     newText += '!';
                 }
                 newText += '[' + urlText;
@@ -207,4 +234,37 @@ string parseLinks(string text, string path)
         }
     }
     return newText;
+}
+
+/**
+ * @brief Check CSS and Template file exist
+ * @param *Config Pointer to config
+ * @return void
+ */
+void checkProjectFileStructure(Config *conf)
+{
+    if (conf->css != "")
+        createFileIfDNE(conf->css, "");
+
+    if (conf->templatefile != "")
+        createFileIfDNE(conf->templatefile, "");
+}
+
+/**
+ * @brief Create a File If DNE 
+ * @param path Path to the file
+ * @param defaultData (optional) Default data used to create new file
+ */
+void createFileIfDNE(std::string path, std::string defaultData = "")
+{
+    std::ifstream file(path.data());
+
+    if (!file.is_open())
+    {
+        cout << endl << "File '" + path + "' not found. Generating...";
+        std::fstream fileWrite(path.data(), std::ios_base::app);
+        fileWrite.write(defaultData.data(), defaultData.size());
+        fileWrite.close();
+        cout << "DONE" << endl;
+    }
 }
