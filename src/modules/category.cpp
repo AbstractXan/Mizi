@@ -51,11 +51,6 @@ Category **createCategories(Category *Categories[16], int *categoryCount, string
             // All the magic happens here
             line = parseLinks(line, path, TemplateMgr);
 
-            // Removing unwanted spaces
-            while (line[i] == ' ')
-            {
-                i++;
-            }
 
             if (line.substr(i, 5) == "# $$$")
             {
