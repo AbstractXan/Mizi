@@ -27,7 +27,7 @@ void createSite(string filename, string path)
   cats = createCategories(Categories, &categoryCount, filename, path, &TemplateMgr);
 
   // Debug categories
-  cout << "\nCategories found: " << categoryCount << endl;
+  // cout << "\nCategories found: " << categoryCount << endl;
   // printContent(cats,categoryCount);
 
   buildHome(conf, cats, categoryCount, path);

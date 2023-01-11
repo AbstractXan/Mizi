@@ -34,7 +34,13 @@ vector<tuple<string, string, string, vector<string>>> testTokenizerProvider()
             "func(arg1,arg2,arg3)",
             "(,)",
             vector<string>({"func", "arg1", "arg2", "arg3"})),
-
+        
+        // Tests for tokenizer that outputs to makePage(title,desc)
+        make_tuple(
+            "HEAD | ",
+            "head | ",
+            "|",
+            vector<string>({"head ", " "}))
     };
 }
 
@@ -60,7 +66,7 @@ void testTokenizer()
 
         if (actual == expected)
         {
-            //cout << "  PASSED OK " << testname << endl;
+            cout << "  PASSED OK " << testname << endl;
             passed++;
         }
         else

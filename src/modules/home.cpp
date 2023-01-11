@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 void buildHome(Config *conf, Category *categories[], int categories_length, string path) {
   ofstream htmlHome;
   htmlHome.open(path + "/home.html");
@@ -25,9 +26,10 @@ void buildHome(Config *conf, Category *categories[], int categories_length, stri
     for (int j = 0; j < category->pageCount; j++) {
       Page *page = category->pages[j];
       string page_name = page->title;
+      string page_desc = page->description;
       string page_index = toLowerCase(page_name);
       htmlHome << "<li><a href='" << page_index << ".html'>" << page_name
-               << "</a></li>";
+               << "</a> <div class='pagedesc'> " << page_desc << "</div></li>";
     }
 
     htmlHome << "</ul>";

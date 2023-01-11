@@ -75,3 +75,8 @@ body main p sub { font-size: 14px;font-style: italic;}
   body { padding: 30px; }
   body main > ul.jump { columns: 1 !important }
 }
+
+div.pagedesc {
+  display: inline;
+  color: #727272;
+}

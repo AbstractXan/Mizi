@@ -8,10 +8,11 @@
 
 using namespace std;
 
-Page *createPage(string title)
+Page *createPage(string title, string desc)
 {
   Page *newpage = new Page;
   newpage->title = title;
+  newpage->description = desc;
   newpage->partsCount = 0;
   return newpage;
 }

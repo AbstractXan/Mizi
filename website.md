@@ -18,7 +18,7 @@ This is separate page2
 ### Html &lt; p &gt; tag
 <p>This is a paragraph</p>
 
-## Index
+## Index|Sample description
 ### First
 Lorem Ipsum
 ### Second
@@ -105,3 +105,4 @@ Templates are defined in [template.conf](https://raw.githubusercontent.com/Abstr
 ## {{TemplatePage}}
 ### {{TemplateSection}}
 Text
+
