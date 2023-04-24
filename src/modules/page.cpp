@@ -34,7 +34,7 @@ void buildPage(Config *conf, Page *page, string path)
   htmlPage << "<main class='page'>" << "\n";
   htmlPage << "<h1>" << page->title << "</h1>\n";
 
-  if (page->partsCount >= 3)
+  if (page->partsCount >= 5)
   {
     htmlPage << "<ul class='jump'>\n";
     for (int i = 0; i < page->partsCount; i++)
