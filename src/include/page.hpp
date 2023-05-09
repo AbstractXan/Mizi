@@ -8,8 +8,8 @@ struct Page
     std::string title;
     std::string description;
     int partsCount;
-    std::string partName[32];
-    std::string partDesc[32];
+    std::string partName[50];
+    std::string partDesc[50];
     std::string tags[16];
 };
 
