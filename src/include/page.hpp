@@ -15,4 +15,4 @@ struct Page
 
 Page *createPage(std::string title, std::string desc);
 void addPart(Page *page, std::string name);
-void buildPage(Config* conf, Page* page, std::string path);
+void buildPage(Config* conf, Page* page, std::string path, std::string nav);

@@ -25,6 +25,5 @@ string html_head(Config *conf, string text)
          "'><title> " + conf->name + " - " + text +
          "</title><link rel='stylesheet' type='text/css' "
          "href='" +
-         conf->css + "'>" + conf->head + "</head><body class='" +
-         text + "'>\n";
+         conf->css + "'>" + conf->head + "</head>";
 }

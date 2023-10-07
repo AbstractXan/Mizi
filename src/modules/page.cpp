@@ -23,7 +23,7 @@ void addPart(Page *page, string name)
   page->partsCount++;
 }
 
-void buildPage(Config *conf, Page *page, string path)
+void buildPage(Config *conf, Page *page, string path, string nav)
 {
   ofstream htmlPage;
   string filename = toLowerCase(page->title);
@@ -31,7 +31,10 @@ void buildPage(Config *conf, Page *page, string path)
   htmlPage.open(filepath.c_str());
   htmlPage << html_head(conf, page->title);
   htmlPage << getHeader(conf);
-  htmlPage << "<main class='page'>" << "\n";
+
+  htmlPage << "<nav><details open><summary>Menu</summary><section class='site-nav'>"<< nav <<"</section></details></nav>" << "\n";
+
+  htmlPage << "<body class='" + page->title + "'>\n" + "<main class='page'>" << "\n";
   htmlPage << "<h1>" << page->title << "</h1>\n";
 
   if (page->partsCount >= 5)
