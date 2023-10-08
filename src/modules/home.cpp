@@ -38,10 +38,10 @@ std::string buildHome(Config *conf, Category *categories[], int categories_lengt
       string page_index = toLowerCase(page_name);
 
       home = home + 
-            "<li><a href='" + page_index + ".html'>" + page_name + "</a> <div class='pagedesc'> " + page_desc + "</div></li>";
+            "<li><a href='" + page_index + ".html'>" + page_name + "</a></li>";
       
       //nav takes no description
-      nav = nav + "<li><a href='" + page_index + ".html'>" + page_name + "</a>";
+      nav = nav + "<a href='" + page_index + ".html'><li>" + page_name + "</li></a>";
     }
     home += "</ul>";
     nav += "</ul>";
