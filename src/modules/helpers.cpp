@@ -181,7 +181,7 @@ string parseLinks(string text, string path, TemplateManager *templateMgr)
                         if (isImage)
                         {
                             index++;
-                            newText += "<img src='" + url + "' alt='" + urlText + "'>";
+                            newText += "<img src='" + url + "' alt='" + urlText + "' loading='lazy'>";
                         }
                         else
                         {

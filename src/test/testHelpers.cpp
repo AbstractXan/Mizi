@@ -66,7 +66,7 @@ void testTokenizer()
 
         if (actual == expected)
         {
-            cout << "  PASSED OK " << testname << endl;
+            // cout << "  PASSED OK " << testname << endl;
             passed++;
         }
         else
@@ -151,28 +151,28 @@ vector<tuple<string, string, string, TemplateManager *, string>> testParseLinksP
             "![altText](url)",
             path,
             nullptr,
-            "<img src='url' alt='altText'>"),
+            "<img src='url' alt='altText' loading='lazy'>"),
 
         make_tuple(
             "Optinal AltText Image",
             "![](url)",
             path,
             nullptr,
-            "<img src='url' alt=''>"),
+            "<img src='url' alt='' loading='lazy'>"),
 
         make_tuple(
             "Inline Image",
             "text ![altText](url) text",
             path,
             nullptr,
-            "text <img src='url' alt='altText'> text"),
+            "text <img src='url' alt='altText' loading='lazy'> text"),
 
         make_tuple(
             "Multiple Image",
             "![altText](url) ![altText](url)",
             path,
             nullptr,
-            "<img src='url' alt='altText'> <img src='url' alt='altText'>"),
+            "<img src='url' alt='altText' loading='lazy'> <img src='url' alt='altText' loading='lazy'>"),
 
         make_tuple(
             "Broken Image : Missing ]",
